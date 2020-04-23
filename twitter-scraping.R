@@ -1,16 +1,17 @@
 library(tidyverse)
 library(tidytext)
+library(readxl)
+library(writexl)
 library(rtweet)
 
 ######## TWITTER SCRAPPING AND DATA FRAME PREP ######## 
 
 #retrive tweets from handle @CovidFoodFuture (once we get API access...!)
-# for now, we use a "dummy" twitter dataset on Australian elections
+# df <- select(election, created_at, full_text, user_name)
 
-# read csv and select relevant variables
-
-election <- read.csv("election_tweets.csv")
-df <- select(election, created_at, full_text, user_name)
+# read csv file of manually compiled tweets
+df <- read_excel("tweets_page1_25.xlsx")
+df <- na.omit(df) # remove rows with N/A
 
 ######## STRING MATCHING TO ADD VARIABLES ######## 
 
@@ -46,7 +47,7 @@ df$participant <- ifelse(grepl("alexander_tmg", df$full_text, ignore.case = T), 
               ifelse(grepl("ndomfuh_1", df$full_text, ignore.case = T), "ndomfuh_1",
               ifelse(grepl("olareeh", df$full_text, ignore.case = T), "olareeh",
               ifelse(grepl("sarahdhaen", df$full_text, ignore.case = T), "sarahdhaen",
-              ifelse(grepl("mayadisraeli", df$full_text, ignore.case = T), "mayadisraeli",
+              ifelse(grepl("maya_disraeli", df$full_text, ignore.case = T), "mayadisraeli",
               ifelse(grepl("serahKiragu_tmg", df$full_text, ignore.case = T), "serahKiragu_tmg",
               ifelse(grepl("sharonjcheboi", df$full_text, ignore.case = T), "sharonjcheboi",
               ifelse(grepl("wangumwangi", df$full_text, ignore.case = T), "wangumwangi",
@@ -59,7 +60,7 @@ df$participant <- ifelse(grepl("alexander_tmg", df$full_text, ignore.case = T), 
 
 # affected/targeted group
 
-df$target_farmers_producers <-  ifelse(grepl("farmer|farmers", df$full_text, ignore.case = T), 1, 0)
+df$target_farmers_producers <-  ifelse(grepl("farmer|farmers|producer|producers", df$full_text, ignore.case = T), 1, 0)
 df$target_consumers <-  ifelse(grepl("consumer|consumers", df$full_text, ignore.case = T), 1, 0)
 df$target_distributors <-  ifelse(grepl("distributor|distributors", df$full_text, ignore.case = T), 1, 0)
 df$target_vendors <-  ifelse(grepl("vendor|vendors", df$full_text, ignore.case = T), 1, 0)
@@ -79,4 +80,6 @@ planting <- c("planting", "")
 fields <- c("field", "steal", "stolen", "theft", "")
 
 
+######## EXPORT TO EXCEL ######## 
 
+write_xlsx(df,"tweets_page1_25.xlsx")

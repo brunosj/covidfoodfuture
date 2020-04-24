@@ -6,11 +6,8 @@ library(rtweet)
 
 ######## TWITTER SCRAPPING AND DATA FRAME PREP ######## 
 
-<<<<<<< HEAD
 #retrive tweets from handle @CovidFoodFuture (once we get API access...!)
-=======
 #retrieve tweets from handle @CovidFoodFuture (once we get API access...!)
->>>>>>> 902482ca4e91894a43cfc65716cd99428d39940f
 # df <- select(election, created_at, full_text, user_name)
 
 # read csv file of manually compiled tweets
@@ -41,11 +38,8 @@ df$country <- ifelse(grepl("Benin", df$full_text, ignore.case = T), "Benin",
               ifelse(grepl("Ethiopia", df$full_text, ignore.case = T), "Ethiopia",
               ifelse(grepl("South Africa|SouthAfrica", df$full_text, ignore.case = T), "South Africa",
                      "Global")))))))))))
-<<<<<<< HEAD
-=======
 
 #participants
->>>>>>> 902482ca4e91894a43cfc65716cd99428d39940f
 
 df$participant <- ifelse(grepl("alexander_tmg", df$full_text, ignore.case = T), "alexander_tmg", 
               ifelse(grepl("AmandaNamayi", df$full_text, ignore.case = T), "AmandaNamayi", 
@@ -75,7 +69,7 @@ df$participant <- ifelse(grepl("alexander_tmg", df$full_text, ignore.case = T), 
 # here we sometimes need to develop lexicons (group of words) to help us adequately capture the information
 
 
-<<<<<<< HEAD
+
 df$target_farmers_producers <-  ifelse(grepl("farmer|farmers|producer|producers|producteur|producteurs", df$full_text, ignore.case = T), 1, 0)
 df$target_consumers <-  ifelse(grepl("consumer|consumers", df$full_text, ignore.case = T), 1, 0)
 df$target_distributors <-  ifelse(grepl("distributor|distributors", df$full_text, ignore.case = T), 1, 0)
@@ -85,7 +79,7 @@ df$target_women <-  ifelse(grepl("woman|women", df$full_text, ignore.case = T), 
 df$target_children <-  ifelse(grepl("child|children|kid|kids", df$full_text, ignore.case = T), 1, 0)
 df$target_informal <-  ifelse(grepl("informal|street", df$full_text, ignore.case = T), 1, 0)
 df$target_vulnerable <-  ifelse(grepl("vulnerable|poor|poorer|poorest", df$full_text, ignore.case = T), 1, 0)
-=======
+
 #we use assignments that generate strings to quickly verify if  info is captured
 #we use assignments that generate binaries for discrete output / visualisation
 
@@ -142,17 +136,17 @@ df$production <-
                 ifelse (grepl("fruit|fruits|vegetables|légumes", df$full_text, ignore.case = T), "fruit and veg",
                             "other")))    
 
-          
+
 
 #production_binaries
-              
+
               df$produ_crops <- ifelse (grepl("crops|produce|harvest|yields|products", df$full_text, ignore.case = T),1,0)
               df$produ_staples <-  ifelse (grepl("staples|grains|rice|millet|wheat", df$full_text, ignore.case = T), 1,0)
               df$produfruitandveg <-  ifelse (grepl("fruit|fruits|vegetables|légumes", df$full_text, ignore.case = T), 1,0)
-              
-          
-  
-                        
+
+
+
+
 #CONSUMPTION
 
 #consumption_strings
@@ -179,6 +173,9 @@ df$consumption <-
               df$consu_food_prices <- ifelse (grepl("price | prices | food costs |inflation", df$full_text, ignore.case = T),1,0)
               df$consu_dietary <- ifelse (grepl("diet | dietary | nutrition | immune system | système immunitaire", df$full_text, ignore.case = T),1,0)
               df$consu_middlemen <-ifelse (grepl("middle men | intermediate | intermediaries ", df$full_text, ignore.case = T),1,0)
+
+
+
 
 
 

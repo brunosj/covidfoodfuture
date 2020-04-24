@@ -5,7 +5,7 @@ library(writexl)
 library(rtweet)
 
 ######## TWITTER SCRAPPING AND DATA FRAME PREP ######## 
-
+#hi this is matteo
 #retrive tweets from handle @CovidFoodFuture (once we get API access...!)
 # df <- select(election, created_at, full_text, user_name)
 

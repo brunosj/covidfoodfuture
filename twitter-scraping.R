@@ -3,7 +3,7 @@ library(tidytext)
 library(rtweet)
 
 ######## TWITTER SCRAPPING AND DATA FRAME PREP ######## 
-
+#hi this is matteo
 #retrive tweets from handle @CovidFoodFuture (once we get API access...!)
 # for now, we use a "dummy" twitter dataset on Australian elections
 

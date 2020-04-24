@@ -6,19 +6,28 @@ library(rtweet)
 
 ######## TWITTER SCRAPPING AND DATA FRAME PREP ######## 
 
+<<<<<<< HEAD
 #retrive tweets from handle @CovidFoodFuture (once we get API access...!)
+=======
+#retrieve tweets from handle @CovidFoodFuture (once we get API access...!)
+>>>>>>> 902482ca4e91894a43cfc65716cd99428d39940f
 # df <- select(election, created_at, full_text, user_name)
 
 # read csv file of manually compiled tweets
 df <- read_excel("tweets_page1_25.xlsx")
 colnames(df) <- "full_text"
 df <- na.omit(df) # remove rows with N/A
+df <- df[,-(4:16)]
 
 
 ######## STRING MATCHING TO ADD VARIABLES ######## 
 
+
 # add country and participants name
 countries <-  c("Benin", "Burkina Faso", "Congo DRC", "Ethiopia", "Kenya", "Madagascar", "Malawi", "Nigeria", "Senegal", "South Africa")
+
+
+#countries
 
 df$country <- ifelse(grepl("Benin", df$full_text, ignore.case = T), "Benin", 
               ifelse(grepl("BurkinaFaso|Burkina Faso|Burkina", df$full_text, ignore.case = T), "Burkina Faso", 
@@ -32,6 +41,11 @@ df$country <- ifelse(grepl("Benin", df$full_text, ignore.case = T), "Benin",
               ifelse(grepl("Ethiopia", df$full_text, ignore.case = T), "Ethiopia",
               ifelse(grepl("South Africa|SouthAfrica", df$full_text, ignore.case = T), "South Africa",
                      "Global")))))))))))
+<<<<<<< HEAD
+=======
+
+#participants
+>>>>>>> 902482ca4e91894a43cfc65716cd99428d39940f
 
 df$participant <- ifelse(grepl("alexander_tmg", df$full_text, ignore.case = T), "alexander_tmg", 
               ifelse(grepl("AmandaNamayi", df$full_text, ignore.case = T), "AmandaNamayi", 
@@ -60,8 +74,8 @@ df$participant <- ifelse(grepl("alexander_tmg", df$full_text, ignore.case = T), 
 # add columns for the different relevant categories (affected/targeted groups, region, producer/consumer side etc.)
 # here we sometimes need to develop lexicons (group of words) to help us adequately capture the information
 
-# affected/targeted group
 
+<<<<<<< HEAD
 df$target_farmers_producers <-  ifelse(grepl("farmer|farmers|producer|producers|producteur|producteurs", df$full_text, ignore.case = T), 1, 0)
 df$target_consumers <-  ifelse(grepl("consumer|consumers", df$full_text, ignore.case = T), 1, 0)
 df$target_distributors <-  ifelse(grepl("distributor|distributors", df$full_text, ignore.case = T), 1, 0)
@@ -71,14 +85,120 @@ df$target_women <-  ifelse(grepl("woman|women", df$full_text, ignore.case = T), 
 df$target_children <-  ifelse(grepl("child|children|kid|kids", df$full_text, ignore.case = T), 1, 0)
 df$target_informal <-  ifelse(grepl("informal|street", df$full_text, ignore.case = T), 1, 0)
 df$target_vulnerable <-  ifelse(grepl("vulnerable|poor|poorer|poorest", df$full_text, ignore.case = T), 1, 0)
+=======
+#we use assignments that generate strings to quickly verify if  info is captured
+#we use assignments that generate binaries for discrete output / visualisation
 
-# area
-df$area_urban <-  ifelse(grepl("urban|city", df$full_text, ignore.case = T), 1, 0)
-df$area_rural <-  ifelse(grepl("rural", df$full_text, ignore.case = T), 1, 0)
-df$area_linkages <-  ifelse(grepl("urban&rural", df$full_text, ignore.case = T), 1, 0)
+#target_strings
 
+df$target <- 
+              ifelse(grepl("farmer|farmers|farms | farming| producer|producers |peasants|smallholder
+                            |smallholders|small-scale | small scale | agriculteur|agriculteurs|
+                             producteur|producteurs|paysans|exploitants | petit exploitant|petits exploitants
+                             ", df$full_text, ignore.case = T), "farmers",
+              ifelse(grepl("consumer|consumers | employees", df$full_text, ignore.case = T), "consumers",
+              ifelse(grepl("distributor|distributors |distribution |transport | suppliers |food-suppliers | food-supply", df$full_text, ignore.case = T), "distributors",
+              ifelse(grepl("youth|young|younger|students", df$full_text, ignore.case = T), "youth",
+              ifelse(grepl("vendor|vendors | food market| food markets| street market |street markets", df$full_text, ignore.case = T), "vendors",
+              ifelse(grepl("woman|women|mother|mothers|female", df$full_text, ignore.case = T), "women",
+              ifelse(grepl("child|children|kid|kids|pupils", df$full_text, ignore.case = T), "children",
+              ifelse(grepl("informal|street|", df$full_text, ignore.case = T), "informal",
+              ifelse(grepl("vulnerable|poor|poorer|poorest", df$full_text, ignore.case = T), "vulnerable",
+                     "other")))))))))
+
+#target_binaries
+
+              df$target_farmers_producers <-  ifelse(grepl("farmer|farmers|producer|producers", df$full_text, ignore.case = T), 1, 0)
+              df$target_consumers <-   ifelse(grepl("consumer|consumers", df$full_text, ignore.case = T), 1, 0)
+              df$target_distributors <-  ifelse(grepl("distributor|distributors |distribution |transport | markets |suppliers |food-suppliers | food-supply", df$full_text, ignore.case = T), 1, 0)
+              df$target_vendors <-  ifelse(grepl("vendor|vendors", df$full_text, ignore.case = T), 1, 0)
+              df$target_youth <-  ifelse(grepl("youth|young", df$full_text, ignore.case = T), 1, 0)
+              df$target_women <-  ifelse(grepl("woman|women", df$full_text, ignore.case = T), 1, 0)
+              df$target_children <-  ifelse(grepl("child|children|kid|kids", df$full_text, ignore.case = T), 1, 0)
+              df$target_informal <-  ifelse(grepl("informal|street", df$full_text, ignore.case = T), 1, 0)
+              df$target_vulnerable <-  ifelse(grepl("vulnerable|poor|poorer|poorest", df$full_text, ignore.case = T), 1, 0)
+
+# area_strings
+
+df$area <-       
+              ifelse(grepl("urban|city|cities|settlements|slums", df$full_text, ignore.case = T), "urban",
+              ifelse(grepl("rural", df$full_text, ignore.case = T), "rural",
+              ifelse(grepl("urban .* rural | region | county", df$full_text, ignore.case = T), "linkages",
+                         "other")))
+
+#area_binaries
+
+              d$area_urban <- ifelse(grepl("urban|city|cities|settlements|slums", df$full_text, ignore.case = T), 1,0)
+              d$area_rural <-   ifelse(grepl("rural", df$full_text, ignore.case = T), 1,0)
+              d$area_linkages <-        ifelse(grepl("urban .* rural | region | county", df$full_text, ignore.case = T), 1,0)
+
+
+
+#production_strings
+
+df$production <-  
+                ifelse (grepl("crops|produce|harvest|yields|products", df$full_text, ignore.case = T),"crops",
+                ifelse (grepl("staples|grains|rice|millet|wheat", df$full_text, ignore.case = T), "staples",
+                ifelse (grepl("fruit|fruits|vegetables|légumes", df$full_text, ignore.case = T), "fruit and veg",
+                            "other")))    
+
+          
+
+#production_binaries
+              
+              df$produ_crops <- ifelse (grepl("crops|produce|harvest|yields|products", df$full_text, ignore.case = T),1,0)
+              df$produ_staples <-  ifelse (grepl("staples|grains|rice|millet|wheat", df$full_text, ignore.case = T), 1,0)
+              df$produfruitandveg <-  ifelse (grepl("fruit|fruits|vegetables|légumes", df$full_text, ignore.case = T), 1,0)
+              
+          
+  
+                        
+#CONSUMPTION
+
+#consumption_strings
+
+df$consumption <- 
+                    ifelse (grepl("access | availability | accès| disponibilité ", df$full_text, ignore.case = T),"access",
+                    ifelse (grepl("buying power| buy| income to buy |income to eat| 
+                                income to feed| money to buy | money to eat| money to feed 
+                                | purchasing power | pouvoir d'achat | pouvoirs d'achat ", df$full_text, ignore.case = T), "buying power"),
+                    ifelse (grepl("meals", df$full_text, ignore.case = T),"missing meals"),
+                    ifelse (grepl("price | prices | food cost | food costs |inflation", df$full_text, ignore.case = T),"food prices",
+                    ifelse (grepl("diet | dietary | nutrition | immune system | système immunitaire", df$full_text, ignore.case = T),"dietary",
+                    ifelse (grepl("middle men | intermediate | intermediaries ", df$full_text, ignore.case = T),"middle men corruption",
+                                "other"))))
+
+
+#consumption_binaries
+
+              df$consu_buying_power <- ifelse (grepl("buying power| buy| income to buy |income to eat| 
+                                income to feed| money to buy | money to eat| money to feed 
+                                | purchasing power | pouvoir d'achat | pouvoirs d'achat ", df$full_text, ignore.case = T), 1 ,0)
+              df$consu_missing_meals <- ifelse (grepl("missing meals", df$full_text, ignore.case = T),1,0)
+              df$consu_access <-  ifelse (grepl("access | availability | accès| disponibilité ", df$full_text, ignore.case = T),1,0)
+              df$consu_food_prices <- ifelse (grepl("price | prices | food costs |inflation", df$full_text, ignore.case = T),1,0)
+              df$consu_dietary <- ifelse (grepl("diet | dietary | nutrition | immune system | système immunitaire", df$full_text, ignore.case = T),1,0)
+              df$consu_middlemen <-ifelse (grepl("middle men | intermediate | intermediaries ", df$full_text, ignore.case = T),1,0)
+
+
+
+
+
+
+
+
+
+
+>>>>>>> 902482ca4e91894a43cfc65716cd99428d39940f
+
+
+<<<<<<< HEAD
 # production
 planting <- c("planting")
+=======
+                            
+planting <- c("planting", "")
+>>>>>>> 902482ca4e91894a43cfc65716cd99428d39940f
 fields <- c("field", "steal", "stolen", "theft", "")
 
 ######## EXPORT TO EXCEL ######## 

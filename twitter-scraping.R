@@ -11,7 +11,9 @@ library(rtweet)
 
 # read csv file of manually compiled tweets
 df <- read_excel("tweets_page1_25.xlsx")
+colnames(df) <- "full_text"
 df <- na.omit(df) # remove rows with N/A
+
 
 ######## STRING MATCHING TO ADD VARIABLES ######## 
 
@@ -29,7 +31,7 @@ df$country <- ifelse(grepl("Benin", df$full_text, ignore.case = T), "Benin",
               ifelse(grepl("Kenya", df$full_text, ignore.case = T), "Kenya",
               ifelse(grepl("Ethiopia", df$full_text, ignore.case = T), "Ethiopia",
               ifelse(grepl("South Africa|SouthAfrica", df$full_text, ignore.case = T), "South Africa",
-                     "N/A")))))))))))
+                     "Global")))))))))))
 
 df$participant <- ifelse(grepl("alexander_tmg", df$full_text, ignore.case = T), "alexander_tmg", 
               ifelse(grepl("AmandaNamayi", df$full_text, ignore.case = T), "AmandaNamayi", 
@@ -53,14 +55,14 @@ df$participant <- ifelse(grepl("alexander_tmg", df$full_text, ignore.case = T), 
               ifelse(grepl("wangumwangi", df$full_text, ignore.case = T), "wangumwangi",
               ifelse(grepl("YadeYacine", df$full_text, ignore.case = T), "YadeYacine",
               ifelse(grepl("YaredTesema1", df$full_text, ignore.case = T), "YaredTesema1",
-                     "N/A")))))))))))))))))))))) 
+                     "Other")))))))))))))))))))))) 
 
 # add columns for the different relevant categories (affected/targeted groups, region, producer/consumer side etc.)
 # here we sometimes need to develop lexicons (group of words) to help us adequately capture the information
 
 # affected/targeted group
 
-df$target_farmers_producers <-  ifelse(grepl("farmer|farmers|producer|producers", df$full_text, ignore.case = T), 1, 0)
+df$target_farmers_producers <-  ifelse(grepl("farmer|farmers|producer|producers|producteur|producteurs", df$full_text, ignore.case = T), 1, 0)
 df$target_consumers <-  ifelse(grepl("consumer|consumers", df$full_text, ignore.case = T), 1, 0)
 df$target_distributors <-  ifelse(grepl("distributor|distributors", df$full_text, ignore.case = T), 1, 0)
 df$target_vendors <-  ifelse(grepl("vendor|vendors", df$full_text, ignore.case = T), 1, 0)
@@ -75,10 +77,9 @@ df$area_urban <-  ifelse(grepl("urban|city", df$full_text, ignore.case = T), 1, 
 df$area_rural <-  ifelse(grepl("rural", df$full_text, ignore.case = T), 1, 0)
 df$area_linkages <-  ifelse(grepl("urban&rural", df$full_text, ignore.case = T), 1, 0)
 
-#production
-planting <- c("planting", "")
+# production
+planting <- c("planting")
 fields <- c("field", "steal", "stolen", "theft", "")
-
 
 ######## EXPORT TO EXCEL ######## 
 

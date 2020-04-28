@@ -17,6 +17,15 @@ df <- na.omit(df) # remove rows with N/A
 df <- df[,-(4:16)]
 
 
+#read new tweets
+
+df1 <- read_excel("tweets_page25-50.xlsx")
+
+
+#join tables
+
+#full_join(df, df1, by = NULL, copy = FALSE, suffix = c(".x", ".y"))
+
 ######## STRING MATCHING TO ADD VARIABLES ######## 
 
 
@@ -38,6 +47,7 @@ df$country <- ifelse(grepl("Benin", df$full_text, ignore.case = T), "Benin",
               ifelse(grepl("Ethiopia", df$full_text, ignore.case = T), "Ethiopia",
               ifelse(grepl("South Africa|SouthAfrica", df$full_text, ignore.case = T), "South Africa",
                      "Global")))))))))))
+              #and africa wide?
 
 #participants
 
@@ -102,15 +112,15 @@ df$target <-
 
 #target_binaries
 
-              df$target_farmers_producers <-  ifelse(grepl("farmer|farmers|producer|producers", df$full_text, ignore.case = T), 1, 0)
-              df$target_consumers <-   ifelse(grepl("consumer|consumers", df$full_text, ignore.case = T), 1, 0)
-              df$target_distributors <-  ifelse(grepl("distributor|distributors |distribution |transport | markets |suppliers |food-suppliers | food-supply", df$full_text, ignore.case = T), 1, 0)
-              df$target_vendors <-  ifelse(grepl("vendor|vendors", df$full_text, ignore.case = T), 1, 0)
-              df$target_youth <-  ifelse(grepl("youth|young", df$full_text, ignore.case = T), 1, 0)
-              df$target_women <-  ifelse(grepl("woman|women", df$full_text, ignore.case = T), 1, 0)
-              df$target_children <-  ifelse(grepl("child|children|kid|kids", df$full_text, ignore.case = T), 1, 0)
-              df$target_informal <-  ifelse(grepl("informal|street", df$full_text, ignore.case = T), 1, 0)
-              df$target_vulnerable <-  ifelse(grepl("vulnerable|poor|poorer|poorest", df$full_text, ignore.case = T), 1, 0)
+df$target_farmers_producers <-  ifelse(grepl("farmer|farmers|producer|producers", df$full_text, ignore.case = T), 1, 0)
+df$target_consumers <-   ifelse(grepl("consumer|consumers", df$full_text, ignore.case = T), 1, 0)
+df$target_distributors <-  ifelse(grepl("distributor|distributors |distribution |transport | markets |suppliers |food-suppliers | food-supply", df$full_text, ignore.case = T), 1, 0)
+df$target_vendors <-  ifelse(grepl("vendor|vendors", df$full_text, ignore.case = T), 1, 0)
+df$target_youth <-  ifelse(grepl("youth|young", df$full_text, ignore.case = T), 1, 0)
+df$target_women <-  ifelse(grepl("woman|women", df$full_text, ignore.case = T), 1, 0)
+df$target_children <-  ifelse(grepl("child|children|kid|kids", df$full_text, ignore.case = T), 1, 0)
+df$target_informal <-  ifelse(grepl("informal|street", df$full_text, ignore.case = T), 1, 0)
+df$target_vulnerable <-  ifelse(grepl("vulnerable|poor|poorer|poorest", df$full_text, ignore.case = T), 1, 0)
 
 # area_strings
 
@@ -132,7 +142,7 @@ df$area <-
 
 df$production <-  
                 ifelse (grepl("crops|produce|harvest|yields|products", df$full_text, ignore.case = T),"crops",
-                ifelse (grepl("staples|grains|rice|millet|wheat", df$full_text, ignore.case = T), "staples",
+                ifelse (grepl("staples|grains|rice|millet|wheat |cassava | tubercule | racine | manioc | céréales", df$full_text, ignore.case = T), "staples",
                 ifelse (grepl("fruit|fruits|vegetables|légumes", df$full_text, ignore.case = T), "fruit and veg",
                             "other")))    
 
@@ -141,7 +151,7 @@ df$production <-
 #production_binaries
 
               df$produ_crops <- ifelse (grepl("crops|produce|harvest|yields|products", df$full_text, ignore.case = T),1,0)
-              df$produ_staples <-  ifelse (grepl("staples|grains|rice|millet|wheat", df$full_text, ignore.case = T), 1,0)
+              df$produ_staples <-  ifelse (grepl("staples|grains|rice|millet|wheat|cassava| tubercule | racine | manioc | céréales", df$full_text, ignore.case = T), 1,0)
               df$produfruitandveg <-  ifelse (grepl("fruit|fruits|vegetables|légumes", df$full_text, ignore.case = T), 1,0)
 
 
@@ -182,21 +192,6 @@ df$consumption <-
 
 
 
-
-
-
-
->>>>>>> 902482ca4e91894a43cfc65716cd99428d39940f
-
-
-<<<<<<< HEAD
-# production
-planting <- c("planting")
-=======
-                            
-planting <- c("planting", "")
->>>>>>> 902482ca4e91894a43cfc65716cd99428d39940f
-fields <- c("field", "steal", "stolen", "theft", "")
 
 ######## EXPORT TO EXCEL ######## 
 

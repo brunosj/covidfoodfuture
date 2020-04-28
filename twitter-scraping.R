@@ -14,23 +14,24 @@ library(rtweet)
 df <- read_excel("tweets_page1_25.xlsx")
 colnames(df) <- "full_text"
 df <- na.omit(df) # remove rows with N/A
-df <- df[,-(4:16)]
+df <- df[,-(2:11)]
 
 
 #read new tweets
 
-df1 <- read_excel("tweets_page25-50.xlsx")
+df1 <- read_excel("tweets_page25_63.xlsx")
+colnames(df1) <- "full_text_df1"
 
 
-#join tables
+#left_join tables
 
-#full_join(df, df1, by = NULL, copy = FALSE, suffix = c(".x", ".y"))
+df2 <-  rbind(df,df1)
 
 ######## STRING MATCHING TO ADD VARIABLES ######## 
 
 
 # add country and participants name
-countries <-  c("Benin", "Burkina Faso", "Congo DRC", "Ethiopia", "Kenya", "Madagascar", "Malawi", "Nigeria", "Senegal", "South Africa")
+#countries <-  c("Benin", "Burkina Faso", "Congo DRC", "Ethiopia", "Kenya", "Madagascar", "Malawi", "Nigeria", "Senegal", "South Africa")
 
 
 #countries
@@ -90,8 +91,8 @@ df$target_children <-  ifelse(grepl("child|children|kid|kids", df$full_text, ign
 df$target_informal <-  ifelse(grepl("informal|street", df$full_text, ignore.case = T), 1, 0)
 df$target_vulnerable <-  ifelse(grepl("vulnerable|poor|poorer|poorest", df$full_text, ignore.case = T), 1, 0)
 
-#we use assignments that generate strings to quickly verify if  info is captured
-#we use assignments that generate binaries for discrete output / visualisation
+# return strings to quickly verify if  info is captured
+# return binaries for discrete output / visualisation
 
 #target_strings
 
@@ -165,12 +166,12 @@ df$consumption <-
                     ifelse (grepl("access | availability | accès| disponibilité ", df$full_text, ignore.case = T),"access",
                     ifelse (grepl("buying power| buy| income to buy |income to eat| 
                                 income to feed| money to buy | money to eat| money to feed 
-                                | purchasing power | pouvoir d'achat | pouvoirs d'achat ", df$full_text, ignore.case = T), "buying power"),
-                    ifelse (grepl("meals", df$full_text, ignore.case = T),"missing meals"),
+                                | purchasing power | pouvoir d'achat | pouvoirs d'achat ", df$full_text, ignore.case = T), "buying power",
+                    ifelse (grepl("meals", df$full_text, ignore.case = T),"missing meals",
                     ifelse (grepl("price | prices | food cost | food costs |inflation", df$full_text, ignore.case = T),"food prices",
                     ifelse (grepl("diet | dietary | nutrition | immune system | système immunitaire", df$full_text, ignore.case = T),"dietary",
                     ifelse (grepl("middle men | intermediate | intermediaries ", df$full_text, ignore.case = T),"middle men corruption",
-                                "other"))))
+                                "other"))))))
 
 
 #consumption_binaries
@@ -186,11 +187,35 @@ df$consumption <-
 
 
 
+#*****************************************TEST new tweets************************************************************************************************************
+
+              df1$target <- 
+                ifelse(grepl("farmer|farmers|farms | farming| producer|producers |peasants|smallholder
+                            |smallholders|small-scale | small scale | agriculteur|agriculteurs|
+                             producteur|producteurs|paysans|exploitants |
+                             petit exploitant|petits exploitants
+                             ", df1$full_text_df1, ignore.case = T), "farmers",
+                       ifelse(grepl("consumer|consumers | employees", df1$full_text_df1, ignore.case = T), "consumers",
+                              ifelse(grepl("distributor|distributors |distribution |transport | suppliers |food-suppliers | food-supply", df$full_text, ignore.case = T), "distributors",
+                                     ifelse(grepl("youth|young|younger|students", df1$full_text_df1, ignore.case = T), "youth",
+                                            ifelse(grepl("vendor|vendors | food market| food markets| street market |street markets", df$full_text, ignore.case = T), "vendors",
+                                                   ifelse(grepl("woman|women|mother|mothers|female", df1$full_text_df1, ignore.case = T), "women",
+                                                          ifelse(grepl("child|children|kid|kids|pupils", df1$full_text_df1, ignore.case = T), "children",
+                                                                 ifelse(grepl("informal|street", df1$full_text_df1, ignore.case = T), "informal",
+                                                                        ifelse(grepl("vulnerable|poor|poorer|poorest", df1$full_text_df1, ignore.case = T), "vulnerable",
+                                                                               "other")))))))))
 
 
-
-
-
+              df1$consumption <- 
+                ifelse (grepl("access | availability | accès| disponibilité ", df1$full_text_df1, ignore.case = T),"access",
+                        ifelse (grepl("buying power| buy| income to buy |income to eat| 
+                                income to feed| money to buy | money to eat| money to feed 
+                                | purchasing power | pouvoir d'achat | pouvoirs d'achat ", df1$full_text_df1, ignore.case = T), "buying power",
+                                ifelse (grepl("meals", df$full_text, ignore.case = T),"missing meals",
+                                        ifelse (grepl("price | prices | food cost | food costs |inflation", df1$full_text_df1, ignore.case = T),"food prices",
+                                                ifelse (grepl("diet | dietary | nutrition | immune system | système immunitaire", df1$full_text_df1, ignore.case = T),"dietary",
+                                                        ifelse (grepl("middle men | intermediate | intermediaries ", df1$full_text_df1, ignore.case = T),"middle men corruption",
+                                                                "other"))))))
 
 
 ######## EXPORT TO EXCEL ######## 

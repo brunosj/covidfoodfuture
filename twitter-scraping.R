@@ -102,15 +102,15 @@ df$target <-
 
 #target_binaries
 
-              df$target_farmers_producers <-  ifelse(grepl("farmer|farmers|producer|producers", df$full_text, ignore.case = T), 1, 0)
-              df$target_consumers <-   ifelse(grepl("consumer|consumers", df$full_text, ignore.case = T), 1, 0)
-              df$target_distributors <-  ifelse(grepl("distributor|distributors |distribution |transport | markets |suppliers |food-suppliers | food-supply", df$full_text, ignore.case = T), 1, 0)
-              df$target_vendors <-  ifelse(grepl("vendor|vendors", df$full_text, ignore.case = T), 1, 0)
-              df$target_youth <-  ifelse(grepl("youth|young", df$full_text, ignore.case = T), 1, 0)
-              df$target_women <-  ifelse(grepl("woman|women", df$full_text, ignore.case = T), 1, 0)
-              df$target_children <-  ifelse(grepl("child|children|kid|kids", df$full_text, ignore.case = T), 1, 0)
-              df$target_informal <-  ifelse(grepl("informal|street", df$full_text, ignore.case = T), 1, 0)
-              df$target_vulnerable <-  ifelse(grepl("vulnerable|poor|poorer|poorest", df$full_text, ignore.case = T), 1, 0)
+df$target_farmers_producers <-  ifelse(grepl("farmer|farmers|producer|producers", df$full_text, ignore.case = T), 1, 0)
+df$target_consumers <-   ifelse(grepl("consumer|consumers", df$full_text, ignore.case = T), 1, 0)
+df$target_distributors <-  ifelse(grepl("distributor|distributors |distribution |transport | markets |suppliers |food-suppliers | food-supply", df$full_text, ignore.case = T), 1, 0)
+df$target_vendors <-  ifelse(grepl("vendor|vendors", df$full_text, ignore.case = T), 1, 0)
+df$target_youth <-  ifelse(grepl("youth|young", df$full_text, ignore.case = T), 1, 0)
+df$target_women <-  ifelse(grepl("woman|women", df$full_text, ignore.case = T), 1, 0)
+df$target_children <-  ifelse(grepl("child|children|kid|kids", df$full_text, ignore.case = T), 1, 0)
+df$target_informal <-  ifelse(grepl("informal|street", df$full_text, ignore.case = T), 1, 0)
+df$target_vulnerable <-  ifelse(grepl("vulnerable|poor|poorer|poorest", df$full_text, ignore.case = T), 1, 0)
 
 # area_strings
 
@@ -182,21 +182,6 @@ df$consumption <-
 
 
 
-
-
-
-
->>>>>>> 902482ca4e91894a43cfc65716cd99428d39940f
-
-
-<<<<<<< HEAD
-# production
-planting <- c("planting")
-=======
-                            
-planting <- c("planting", "")
->>>>>>> 902482ca4e91894a43cfc65716cd99428d39940f
-fields <- c("field", "steal", "stolen", "theft", "")
 
 ######## EXPORT TO EXCEL ######## 
 

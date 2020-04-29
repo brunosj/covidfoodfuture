@@ -197,6 +197,21 @@ count(df_ENG, participant)
 
 # filter df by week 
 df_FR_w23 <- filter(df_FR, week == "2-3" )
+
+df_ENG_w23 <- filter(df_ENG, week == "2-3" )
+
+######## EXPORT TO EXCEL ######## 
+
+write_xlsx(df_FR_w23,"df_FR_w23.xlsx")
+write_xlsx(df_ENG_w23,"df_ENG_w23.xlsx")
+
+
+
+
+
+
+=======
+
 df_ENG_w23 <- filter(df_ENG, week == "2-3" )
 
 ######## EXPORT TO EXCEL ######## 
@@ -278,5 +293,4 @@ df_ENG_w23 <- filter(df_ENG, week == "2-3" )
 
 
       
-      
-      
+

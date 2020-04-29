@@ -20,6 +20,7 @@ df1 <- df1 %>% mutate(week = "1")
 #read new tweets
 
 df2 <- read_excel("tweets_page25_63.xlsx")
+df2 <- na.omit(df2) 
 colnames(df2) <- "full_text"
 df2 <- df2 %>% mutate(week = "2-3")
 
@@ -224,21 +225,28 @@ df$consumption <-
 # separate ENG and FR tweets
 
 #df$language <- ifelse(grepl("é | è | à | ê | ç", df$full_text, ignore.case = T), "French", "English")
-
 #df_FR <- df %>% filter(country %in% c("Benin", "Burkina Faso", "DRC", "Madagascar", "Senegal") | language == "French")
 
 df_FR <- df %>% 
-  filter(participant %in% c("josherbert25", "EMvuenga", "mayadisraeli", "MalalaOnisoa", "EdoSango", "YadeYacine"))
-
+  filter(participant %in% c("josherbert25", "EMvuenga", "mayadisraeli", "MalalaOnisoa", "EdoSango", "ed_sango", "YadeYacine"))
 
 df_ENG <- df %>% 
     anti_join(df_FR)
 
-
-
 count(df_FR, participant) # tweets per countries
 count(df_ENG, participant)
 
+# filter df by week 
+df_FR_w23 <- filter(df_FR, week == "2-3" )
+df_ENG_w23 <- filter(df_ENG, week == "2-3" )
+
 ######## EXPORT TO EXCEL ######## 
 
-#write_xlsx(df,"tweets_analysis_week1-4.xlsx")
+write_xlsx(df_FR_w23,"df_FR_w23.xlsx")
+write_xlsx(df_ENG_w23,"df_ENG_w23.xlsx")
+
+
+
+
+
+

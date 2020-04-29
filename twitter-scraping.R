@@ -27,7 +27,7 @@ df2 <- df2 %>% mutate(week = "2-3")
 
 #merge data frames
 
-df <-  merge(df1, df2, by=c("full_text", "week"),all = T)
+df <-  merge(df1, df2, by = c("full_text", "week"),all = T)
 
 
 ######## STRING MATCHING TO ADD VARIABLES ######## 
@@ -223,21 +223,22 @@ df$consumption <-
               
 # separate ENG and FR tweets
 
-df$language <- 
-    ifelse(grepl("é | è | à | ê | ç", df$full_text, ignore.case = T), "French", "English")
+#df$language <- ifelse(grepl("é | è | à | ê | ç", df$full_text, ignore.case = T), "French", "English")
+
+#df_FR <- df %>% filter(country %in% c("Benin", "Burkina Faso", "DRC", "Madagascar", "Senegal") | language == "French")
 
 df_FR <- df %>% 
-    filter(country %in% c("Benin", "Burkina Faso", "DRC", "Madagascar", "Senegal") | language == "French")
+  filter(participant %in% c("josherbert25", "EMvuenga", "mayadisraeli", "MalalaOnisoa", "EdoSango", "YadeYacine"))
+
 
 df_ENG <- df %>% 
     anti_join(df_FR)
 
 
-count(df_FR, country) # tweets per countries
-count(df_ENG, country)
+
+count(df_FR, participant) # tweets per countries
+count(df_ENG, participant)
 
 ######## EXPORT TO EXCEL ######## 
 
 #write_xlsx(df,"tweets_analysis_week1-4.xlsx")
-
-              

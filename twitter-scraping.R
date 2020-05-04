@@ -117,7 +117,9 @@ df$target <-
 
 #target_binaries
 
-            df$target_farmers_producers <-  ifelse(grepl("farmer|farmers|producer|producers", df$full_text, ignore.case = T), 1, 0)
+            df$target_farmers_producers <-  ifelse(grepl("farmer|farmers|farms | farming| producer|producers |peasants|smallholder
+                            |smallholders|small-scale | small scale | field | fields | agriculteur|agriculteurs|
+                             producteur|producteurs|paysans|exploitants | petit exploitant|petits exploitants", df$full_text, ignore.case = T), 1, 0)
             df$target_consumers <-   ifelse(grepl("consumer|consumers", df$full_text, ignore.case = T), 1, 0)
             df$target_distributors <-  ifelse(grepl("distributor|distributors |distribution |transport | markets |suppliers |food-suppliers | food-supply", df$full_text, ignore.case = T), 1, 0)
             df$target_vendors <-  ifelse(grepl("vendor|vendors", df$full_text, ignore.case = T), 1, 0)
@@ -125,9 +127,10 @@ df$target <-
             df$target_women <-  ifelse(grepl("woman|women", df$full_text, ignore.case = T), 1, 0)
             df$target_children <-  ifelse(grepl("child|children|kid|kids", df$full_text, ignore.case = T), 1, 0)
             df$target_informal <-  ifelse(grepl("informal|street", df$full_text, ignore.case = T), 1, 0)
-            df$target_vulnerable <-  ifelse(grepl("vulnerable|poor|poorer|poorest", df$full_text, ignore.case = T), 1, 0)
+            df$target_vulnerable <-  ifelse(grepl("vulnerable|poor|poorer|poorest |slum |slums", df$full_text, ignore.case = T), 1, 0)
             df$private_sector <- ifelse(grepl("private sector", df$full_text, ignore.case = T), 1, 0)
-
+            df$extension_services <- ifelse (grepl(" extension |training .* farmers ", df$full_text, ignore.case = T),1,0)
+            df$government <-  ifelse (grepl(" laws | legislation ", df$full_text, ignore.case = T),1,0)
   
 # area_strings
 
@@ -151,16 +154,18 @@ df$production <-
                 ifelse (grepl("crops|produce|harvest|yields|products", df$full_text, ignore.case = T),"crops",
                 ifelse (grepl("staples|grains|rice|millet|wheat |cassava | tubercule | racine | manioc | céréales", df$full_text, ignore.case = T), "staples",
                 ifelse (grepl("fruit|fruits|vegetables|légumes", df$full_text, ignore.case = T), "fruit and veg",
-                            "other")))    
+                ifelse (grepl("fertilizer | fertilizers", df$full_text, ignore.case = T), "farming inputs",
+                                "other"))))    
 
 
+#some tweets about fertilizers: add farming inputs
 
 #production_binaries
 
               df$produ_crops <- ifelse (grepl("crops|produce|harvest|yields|products", df$full_text, ignore.case = T),1,0)
               df$produ_staples <-  ifelse (grepl("staples|grains|rice|millet|wheat|cassava| tubercule | racine | manioc | céréales", df$full_text, ignore.case = T), 1,0)
-              df$produfruitandveg <-  ifelse (grepl("fruit|fruits|vegetables|légumes", df$full_text, ignore.case = T), 1,0)
-              
+              df$produ_fruitandveg <-  ifelse (grepl("fruit|fruits|vegetables|légumes", df$full_text, ignore.case = T), 1,0)
+              df$produ_farming_inputs <- ifelse (grepl ("fertilizer | fertilizers", df$full_text, ignore.case = T), 1, 0)
 
 
 
@@ -186,7 +191,7 @@ df$consumption <-
               df$consu_buying_power <- ifelse (grepl("buying power| buy| income to buy |income to eat| 
                                 income to feed| money to buy | money to eat| money to feed 
                                 | purchasing power | pouvoir d'achat | pouvoirs d'achat ", df$full_text, ignore.case = T), 1 ,0)
-              df$consu_missing_meals <- ifelse (grepl("missing meals", df$full_text, ignore.case = T),1,0)
+              df$consu_missing_meals <- ifelse (grepl("missing meals | school", df$full_text, ignore.case = T),1,0)
               df$consu_access <-  ifelse (grepl("access | availability | accès| disponibilité ", df$full_text, ignore.case = T),1,0)
               df$consu_food_prices <- ifelse (grepl("price | prices | food costs |inflation", df$full_text, ignore.case = T),1,0)
               df$consu_dietary <- ifelse (grepl("diet | dietary | nutrition | immune system | système immunitaire", df$full_text, ignore.case = T),1,0)
@@ -224,13 +229,19 @@ df_ENG_w23 <- filter(df_ENG, week == "2-3" )
 #df_ENG CHALLENGES
 
 
-  #  
-  df_ENG$consu_access <-  ifelse (grepl("access ", df_ENG$full_text, ignore.case = T),1,0)
+  #  challenges_all
+
+  df_ENG$challenges_all <-  ifelse (grepl("challenges | challenges | access |post-harvest losses | post harvest losses |loss|losses |storage |refrigeration
+                                      | spoilage | wastage | throw away | food waste |logistics | agrologistics | agrilogistics | agro-logistics | agri-logistics |barriers|trade
+                                      |supply chains | disrupted chain| mobility | transport |transportation |food trucks | trucks | driver |
+                                           drivers |sending food |from farm to market| farm to markets |field to markets | distribution price | prices | food hikes | hiked prices | cost | costs| hike | hikes |
+                                      |food cost | food costs |inflation |  fluctuating| fluctuationbuying power| buy| income to buy |income to eat|income to feed| money to buy | money to eat| money to feed 
+                                | purchasing power ", df_ENG$full_text, ignore.case = T),1,0)
 
   # post harvest losses
   df_ENG$consu_post_harvest_losses <- ifelse (grepl ("post-harvest losses | post harvest losses |loss|losses |storage |refrigeration
                                       | spoilage | wastage | throw away | food waste ", df_ENG$full_text, ignore.case = T), 1,0)
- #logistics
+ # logistics
   df_ENG$consu_logistics <- ifelse (grepl ("logistics | agrologistics | agrilogistics | agro-logistics | agri-logistics |barriers|trade
                                       |supply chains | disrupted chain| mobility | transport |transportation |food trucks | trucks | driver |
                                            drivers |sending food |from farm to market| farm to markets |field to markets | distribution ", df_ENG$full_text, ignore.case = T), 1,0)
@@ -261,38 +272,49 @@ df_ENG_w23 <- filter(df_ENG, week == "2-3" )
     
     df_ENG$response_solidarity_funds  <- ifelse (grepl(" food packages .* vulnerable households | solidarity funds | parcels | relief 
                                                        NGO | NGOs | aid ", df_ENG$full_text, ignore.case = T),1,0)
+
     
-    df_ENG$extension_services <- ifelse (grepl(" extension ", df_ENG$full_text, ignore.case = T),1,0)
+
     
-    
-    df_ENG$government <-  ifelse (grepl(" laws | legislation ", df_ENG$full_text, ignore.case = T),1,0)
-    
-  
- 
-    
+
    
-#create a table with responses
+#create 2 tables with challenges and responses
     
+df_CHALLENGES <- filter(df_ENG, challenges_all == 1)
+
     df_RESPONSES <- filter(df_ENG, responses_all == 1)
     
     
+df_ENG_w23$challenges_all <-  ifelse (grepl("challenges | challenges | access |post-harvest losses | post harvest losses |loss|losses |storage |refrigeration
+                                      | spoilage | wastage | throw away | food waste |logistics | agrologistics | agrilogistics | agro-logistics | agri-logistics |barriers|trade
+                                      |supply chains | disrupted chain| mobility | transport |transportation |food trucks | trucks | driver |
+                                           drivers |sending food |from farm to market| farm to markets |field to markets | distribution price | prices | food hikes | hiked prices | cost | costs| hike | hikes |
+                                      |food cost | food costs |inflation |  fluctuating| fluctuationbuying power| buy| income to buy |income to eat|income to feed| money to buy | money to eat| money to feed 
+                                | purchasing power ", df_ENG_w23$full_text, ignore.case = T),1,0)
+
     
+df_ENG_w23$responses_all<- ifelse (grepl(" response | responses | solution | solutions |
+    food packages .* vulnerable households | solidarity funds | parcels | relief | NGO | NGOs | aid |monitor | monitoring
+      | food banks | digital | app |software | online | platform |website | data | ICT ", df_ENG_w23$full_text, ignore.case = T),1,0)
     
-    
-    
+
+
+
+
+
+#some counts to guide the text
+
+count(df_ENG_w23, target_farmers_producers)
+count(df_ENG, consu_post_harvest_losses)
+count(df_ENG, consu_price_hikes)
+count(df_ENG_w23, challenges_all)
+count(df_ENG_w23, responses_all)   
+count(df_ENG, responses_all)
+count (df_ENG, challenges_all)
 
 ####### EXPORT TO EXCEL ######## 
 
 write_xlsx(df_FR_w23,"df_FR_w23.xlsx")
 write_xlsx(df_ENG_w23,"df_ENG_w23.xlsx")
+write_xlsx(df_CHALLENGES,"df_CHALLENGES.xlsx")
 write_xlsx(df_RESPONSES,"df_RESPONSES.xlsx")
-
-
-
-      
-      
-      
-      
-      
-      
-      

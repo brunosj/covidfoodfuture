@@ -6,9 +6,25 @@ library(rtweet)
 
 ######## TWITTER SCRAPPING AND DATA FRAME PREP ######## 
 
-#retrive tweets from handle @CovidFoodFuture (once we get API access...!)
-#retrieve tweets from handle @CovidFoodFuture (once we get API access...!)
-# df <- select(election, created_at, full_text, user_name)
+# setup oauth token
+
+## store api keys
+api_key <- "O1l6Ht3YmIWBP2be2o0OAhCKj"
+api_secret_key <- "yfbkjUjw4cix3PbF12gKYiZAGgRkSt5zIbufxq7Mj5jIrRHQXd"
+access_token <- "1245981415784747008-voxU5hUTIogF3xsZbIqpqLXFgF6QMQ"
+access_token_secret <- "JgQKXkd7aKcOLYdzFQZe4c3CLL1qCbAh8BiwIhGu7gVez"
+
+## authenticate via web browser
+token <- create_token(
+  app = "tmg-twitteranalysis",
+  consumer_key = api_key,
+  consumer_secret = api_secret_key,
+  access_token = access_token,
+  access_secret = access_token_secret)
+
+# retrieve tweets from the CovidFoodFuture timeline
+yistweets <- get_timeline("CovidFoodFuture", n = 3200)
+write_xlsx(yistweets,"yistweets_0804_0405.xlsx")
 
 # read csv file of manually compiled tweets
 df1 <- read_excel("tweets_page1_25_v2.xlsx")
@@ -16,14 +32,12 @@ df1 <- na.omit(df1) # remove rows with N/A
 #df <- df[,-(2:11)] # brackets are useful to select or remove rows/columns
 df1 <- df1 %>% mutate(week = "1")
 
-
 #read new tweets
 
 df2 <- read_excel("tweets_page25_63.xlsx")
 df2 <- na.omit(df2) 
 colnames(df2) <- "full_text"
 df2 <- df2 %>% mutate(week = "2-3")
-
 
 
 #merge data frames
@@ -83,18 +97,6 @@ df$participant <- ifelse(grepl("alexander_tmg", df$full_text, ignore.case = T), 
 # add columns for the different relevant categories (affected/targeted groups, region, producer/consumer side etc.)
 # here we sometimes need to develop lexicons (group of words) to help us adequately capture the information
 
-
-
-df$target_farmers_producers <-  ifelse(grepl("farmer|farmers|producer|producers|producteur|producteurs", df$full_text, ignore.case = T), 1, 0)
-df$target_consumers <-  ifelse(grepl("consumer|consumers", df$full_text, ignore.case = T), 1, 0)
-df$target_distributors <-  ifelse(grepl("distributor|distributors", df$full_text, ignore.case = T), 1, 0)
-df$target_vendors <-  ifelse(grepl("vendor|vendors", df$full_text, ignore.case = T), 1, 0)
-df$target_youth <-  ifelse(grepl("youth|young", df$full_text, ignore.case = T), 1, 0)
-df$target_women <-  ifelse(grepl("woman|women", df$full_text, ignore.case = T), 1, 0)
-df$target_children <-  ifelse(grepl("child|children|kid|kids", df$full_text, ignore.case = T), 1, 0)
-df$target_informal <-  ifelse(grepl("informal|street", df$full_text, ignore.case = T), 1, 0)
-df$target_vulnerable <-  ifelse(grepl("vulnerable|poor|poorer|poorest", df$full_text, ignore.case = T), 1, 0)
-
 # return strings to quickly verify if info is captured
 # return binaries for discrete output / visualisation
 
@@ -107,12 +109,12 @@ df$target <-
                              ", df$full_text, ignore.case = T), "farmers",
               ifelse(grepl("consumer|consumers | employees", df$full_text, ignore.case = T), "consumers",
               ifelse(grepl("distributor|distributors |distribution |transport | suppliers |food-suppliers | food-supply", df$full_text, ignore.case = T), "distributors",
-              ifelse(grepl("youth|young|younger|students", df$full_text, ignore.case = T), "youth",
+                 ifelse(grepl("vulnerable|poor|poorer|poorest", df$full_text, ignore.case = T), "vulnerable",
+                     ifelse(grepl("youth|young|younger|students", df$full_text, ignore.case = T), "youth",
               ifelse(grepl("vendor|vendors | food market| food markets| street market |street markets", df$full_text, ignore.case = T), "vendors",
               ifelse(grepl("woman|women|mother|mothers|female", df$full_text, ignore.case = T), "women",
               ifelse(grepl("child|children|kid|kids|pupils |school|schools| youngest", df$full_text, ignore.case = T), "children",
               ifelse(grepl("informal|street|", df$full_text, ignore.case = T), "informal",
-              ifelse(grepl("vulnerable|poor|poorer|poorest", df$full_text, ignore.case = T), "vulnerable",
                      "other")))))))))
 
 #target_binaries
@@ -147,7 +149,6 @@ df$area <-
               df$area_linkages <-    ifelse(grepl("urban .* rural | region | county", df$full_text, ignore.case = T), 1,0)
 
 
-
 #production_strings
 
 df$production <-  
@@ -166,8 +167,6 @@ df$production <-
               df$produ_staples <-  ifelse (grepl("staples|grains|rice|millet|wheat|cassava| tubercule | racine | manioc | céréales", df$full_text, ignore.case = T), 1,0)
               df$produ_fruitandveg <-  ifelse (grepl("fruit|fruits|vegetables|légumes", df$full_text, ignore.case = T), 1,0)
               df$produ_farming_inputs <- ifelse (grepl ("fertilizer | fertilizers", df$full_text, ignore.case = T), 1, 0)
-
-
 
 
 #CONSUMPTION
@@ -199,7 +198,7 @@ df$consumption <-
 
 
 
-              
+             
 # separate ENG and FR tweets
 
 #df$language <- ifelse(grepl("é | è | à | ê | ç", df$full_text, ignore.case = T), "French", "English")
@@ -219,8 +218,22 @@ df_FR_w23 <- filter(df_FR, week == "2-3" )
 
 df_ENG_w23 <- filter(df_ENG, week == "2-3" )
 
+######## EXPORT TO EXCEL ######## 
+
+write_xlsx(df_FR_w23,"df_FR_w23.xlsx")
+write_xlsx(df_ENG_w23,"df_ENG_w23.xlsx")
 
 
+
+
+df_ENG_w23 <- filter(df_ENG, week == "2-3" )
+
+######## EXPORT TO EXCEL ######## 
+
+write_xlsx(df_FR_w23,"df_FR_w23.xlsx")
+write_xlsx(df_ENG_w23,"df_ENG_w23.xlsx")
+
+df_ENG_w23 <- filter(df_ENG, week == "2-3" )
 
 
 # new columns based on Sarah´s text for WHH
@@ -314,7 +327,16 @@ count (df_ENG, challenges_all)
 
 ####### EXPORT TO EXCEL ######## 
 
+<<<<<<< HEAD
 write_xlsx(df_FR_w23,"df_FR_w23.xlsx")
 write_xlsx(df_ENG_w23,"df_ENG_w23.xlsx")
 write_xlsx(df_CHALLENGES,"df_CHALLENGES.xlsx")
 write_xlsx(df_RESPONSES,"df_RESPONSES.xlsx")
+=======
+#write_xlsx(df_FR_w23,"df_FR_w23.xlsx")
+#write_xlsx(df_ENG_w23,"df_ENG_w23.xlsx")
+#write_xlsx(df_RESPONSES,"df_RESPONSES.xlsx")
+
+
+      
+>>>>>>> d8e61c209dd9224fe8eaef58f422ce4c536bc238

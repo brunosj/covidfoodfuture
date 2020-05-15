@@ -3,7 +3,10 @@ title: "Covid-19 Food/Future Twitter Analysis"
 output: html_notebook
 ---
 
+<<<<<<< HEAD
 Hi team! Let's use an R notebook rather than plain script. It's convenient in terms of export functions but also because you can run whole code chunks rather than needing to highlight every single part.
+=======
+>>>>>>> 6e78e071e0b3c6bcfae17f0b5012b137fe0f552d
 
 ```{r}
 ############ ENVIRONMENT PREPARATION ############
@@ -26,7 +29,12 @@ p_needed <- c(
   'dplyr', 'tidyr', 'gapminder',
                  'ggplot2',  'ggalt',
                  'forcats', 'R.utils', 'png', 
+<<<<<<< HEAD
                  'grid', 'ggpubr', 'scales'
+=======
+                 'grid', 'ggpubr', 'scales',
+                 'bbplot'
+>>>>>>> 6e78e071e0b3c6bcfae17f0b5012b137fe0f552d
 			)
 packages <- rownames(installed.packages())
 p_to_install <- p_needed[!(p_needed %in% packages)]
@@ -74,6 +82,7 @@ covid19foodfuture_net <- network_data(covid19foodfuture, "retweet,mention,reply"
 #write_xlsx(covid19foodfuture,"cff_hastag_202005051852-202005141226.xlsx") this one is written already
 
 # 30-day search (maximum n per search is 100, which is problematic)
+<<<<<<< HEAD
 # covidhastag <- search_30day(
 #   "#Covid19FoodFuture",
 #   n = 100,
@@ -87,6 +96,21 @@ covid19foodfuture_net <- network_data(covid19foodfuture, "retweet,mention,reply"
 
 
 # use data retrieved from the twitter dashboard to get # of impressions/engagements (08.04.2020-14.05.2020)
+=======
+covidhastag <- search_30day(
+  "#Covid19FoodFuture",
+  n = 100,
+  fromDate = "202004121300",
+  toDate = "202004191300",
+  env_name = "research",
+  safedir = NULL,
+  parse = TRUE,
+  token = token
+)
+
+
+# use data retrieved from the twitter dashboard to get # of impressions/engagements
+>>>>>>> 6e78e071e0b3c6bcfae17f0b5012b137fe0f552d
 twitteranalytics1 <- read_csv("tweet_activity_metrics_CovidFoodFuture_20200408_20200509_en.csv")
 twitteranalytics2 <- read_csv("tweet_activity_metrics_CovidFoodFuture_20200508_20200515_en.csv")
 twitterweb <- rbind(twitteranalytics1,twitteranalytics2)

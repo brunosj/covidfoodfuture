@@ -3,10 +3,8 @@ title: "Covid-19 Food/Future Twitter Analysis"
 output: html_notebook
 ---
 
-<<<<<<< HEAD
 Hi team! Let's use an R notebook rather than plain script. It's convenient in terms of export functions but also because you can run whole code chunks rather than needing to highlight every single part.
-=======
->>>>>>> 6e78e071e0b3c6bcfae17f0b5012b137fe0f552d
+
 
 ```{r}
 ############ ENVIRONMENT PREPARATION ############
@@ -28,14 +26,10 @@ p_needed <- c(
   'magick',
   'dplyr', 'tidyr', 'gapminder',
                  'ggplot2',  'ggalt',
-                 'forcats', 'R.utils', 'png', 
-<<<<<<< HEAD
+                 'forcats', 'R.utils', 'png',
                  'grid', 'ggpubr', 'scales'
-=======
-                 'grid', 'ggpubr', 'scales',
-                 'bbplot'
->>>>>>> 6e78e071e0b3c6bcfae17f0b5012b137fe0f552d
 			)
+
 packages <- rownames(installed.packages())
 p_to_install <- p_needed[!(p_needed %in% packages)]
 if (length(p_to_install) > 0) {
@@ -68,7 +62,12 @@ token <- create_token(
 yistweets <- get_timeline("CovidFoodFuture", n = 3200)
 yistweets_team <- yistweets[yistweets$is_retweet==FALSE, ] #remove retweets
 
-# descriptive stats
+```
+
+```{r}
+############ STATS ############
+
+# likes and retweets
 sum(yistweets_team$favorite_count)
 sum(yistweets_team$retweet_count)
 
@@ -82,7 +81,6 @@ covid19foodfuture_net <- network_data(covid19foodfuture, "retweet,mention,reply"
 #write_xlsx(covid19foodfuture,"cff_hastag_202005051852-202005141226.xlsx") this one is written already
 
 # 30-day search (maximum n per search is 100, which is problematic)
-<<<<<<< HEAD
 # covidhastag <- search_30day(
 #   "#Covid19FoodFuture",
 #   n = 100,
@@ -96,7 +94,6 @@ covid19foodfuture_net <- network_data(covid19foodfuture, "retweet,mention,reply"
 
 
 # use data retrieved from the twitter dashboard to get # of impressions/engagements (08.04.2020-14.05.2020)
-=======
 covidhastag <- search_30day(
   "#Covid19FoodFuture",
   n = 100,
@@ -110,7 +107,6 @@ covidhastag <- search_30day(
 
 
 # use data retrieved from the twitter dashboard to get # of impressions/engagements
->>>>>>> 6e78e071e0b3c6bcfae17f0b5012b137fe0f552d
 twitteranalytics1 <- read_csv("tweet_activity_metrics_CovidFoodFuture_20200408_20200509_en.csv")
 twitteranalytics2 <- read_csv("tweet_activity_metrics_CovidFoodFuture_20200508_20200515_en.csv")
 twitterweb <- rbind(twitteranalytics1,twitteranalytics2)
@@ -360,7 +356,7 @@ count(df_FR, participant) # tweets per countries
 count(df_ENG, participant)
 
 # filter df by week 
-d#f_FR_w23 <- filter(df_FR, week == "2-3" )
+#f_FR_w23 <- filter(df_FR, week == "2-3" )
 
 #df_ENG_w23 <- filter(df_ENG, week == "2-3" )
 
@@ -370,8 +366,6 @@ d#f_FR_w23 <- filter(df_FR, week == "2-3" )
 #write_xlsx(df_ENG_w23,"df_ENG_w23.xlsx")
 
 
-
-
 #df_ENG_w23 <- filter(df_ENG, week == "2-3" )
 
 ######## EXPORT TO EXCEL ######## 
@@ -380,13 +374,13 @@ d#f_FR_w23 <- filter(df_FR, week == "2-3" )
 #write_xlsx(df_ENG_w23,"df_ENG_w23.xlsx")
 
 #df_ENG_w23 <- filter(df_ENG, week == "2-3" )
+```
 
 
-# new columns based on Sarah´s text for WHH
-
+```{r}
+# Challenges & Responses
 
 #df_ENG CHALLENGES
-
 
   #  
   df_ENG$consu_access <-  ifelse (grepl("access ", df_ENG$full_text, ignore.case = T),1,0)
@@ -433,7 +427,6 @@ d#f_FR_w23 <- filter(df_FR, week == "2-3" )
     
 df_RESPONSES <- filter(df_ENG, responses_all == 1)
     
-    
 
 ####### EXPORT TO EXCEL ######## 
 
@@ -443,4 +436,26 @@ df_RESPONSES <- filter(df_ENG, responses_all == 1)
 
 
 ```
+
+```{r}
+
+# subset by week
+ENG_w1 <- df_ENG[df_ENG$date >= "2020-04-06" & df_ENG$date <= "2020-04-12",]
+ENG_w2 <- df_ENG[df_ENG$date >= "2020-04-13" & df_ENG$date <= "2020-04-19",]
+ENG_w3 <- df_ENG[df_ENG$date >= "2020-04-20" & df_ENG$date <= "2020-04-26",]
+ENG_w4 <- df_ENG[df_ENG$date >= "2020-04-27" & df_ENG$date <= "2020-05-03",]
+ENG_w5 <- df_ENG[df_ENG$date >= "2020-05-04" & df_ENG$date <= "2020-05-10",]
+ENG_w6 <- df_ENG[df_ENG$date >= "2020-05-11" & df_ENG$date <= "2020-05-17",]
+
+FR_w1 <- df_FR[df_FR$date >= "2020-04-06" & df_FR$date <= "2020-04-12",]
+FR_w2  <- df_FR[df_FR$date >= "2020-04-13" & df_FR$date <= "2020-04-19",]
+FR_w3  <- df_FR[df_FR$date >= "2020-04-20" & df_FR$date <= "2020-04-26",]
+FR_w4  <- df_FR[df_FR$date >= "2020-04-27" & df_FR$date <= "2020-05-03",]
+FR_w5  <- df_FR[df_FR$date >= "2020-05-04" & df_FR$date <= "2020-05-10",]
+FR_w6 <- df_FR[df_FR$date >= "2020-05-11" & df_FR$date <= "2020-05-17",]
+
+
+
+```
+
 

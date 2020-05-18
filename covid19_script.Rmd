@@ -206,7 +206,7 @@ df$country <- ifelse(grepl("Benin", df$full_text, ignore.case = T), "Benin",
               ifelse(grepl("BurkinaFaso|Burkina Faso|Burkina", df$full_text, ignore.case = T), "Burkina Faso", 
               ifelse(grepl("Ghana", df$full_text, ignore.case = T), "Ghana",
               ifelse(grepl("Nigeria", df$full_text, ignore.case = T), "Nigeria", 
-              ifelse(grepl("Senegal", df$full_text, ignore.case = T), "Senegal", 
+              ifelse(grepl("Senegal | Sénégal", df$full_text, ignore.case = T), "Senegal", 
               ifelse(grepl("Congo|DRC|RDC", df$full_text, ignore.case = T), "DRC",
               ifelse(grepl("Malawi", df$full_text, ignore.case = T), "Malawi",
               ifelse(grepl("Madagascar", df$full_text, ignore.case = T), "Madagascar",
@@ -214,7 +214,7 @@ df$country <- ifelse(grepl("Benin", df$full_text, ignore.case = T), "Benin",
               ifelse(grepl("Ethiopia", df$full_text, ignore.case = T), "Ethiopia",
               ifelse(grepl("South Africa|SouthAfrica", df$full_text, ignore.case = T), "South Africa",
                      "Global")))))))))))
-              #and africa wide?
+
 
 #participants
 
@@ -244,6 +244,8 @@ df$participant <- ifelse(grepl("alexander_tmg", df$full_text, ignore.case = T), 
                      "Other")))))))))))))))))))))))  
 
 view(count(df, participant))
+view(count(df, country))
+
 
 # add columns for the different relevant categories (affected/targeted groups, region, producer/consumer side etc.)
 # here we sometimes need to develop lexicons (group of words) to help us adequately capture the information
@@ -423,11 +425,11 @@ count(df_ENG, participant)
     
   
  
-#create a table with responses
+#create a table with responses (english language)
     
 df_RESPONSES <- filter(df_ENG, responses_all == 1)
     
-
+view(count(df_RESPONSES, country))
 ####### EXPORT TO EXCEL ######## 
 
 #write_xlsx(df_FR_w23,"df_FR_w23.xlsx")
@@ -446,6 +448,8 @@ ENG_w3 <- df_ENG[df_ENG$date >= "2020-04-20" & df_ENG$date <= "2020-04-26",]
 ENG_w4 <- df_ENG[df_ENG$date >= "2020-04-27" & df_ENG$date <= "2020-05-03",]
 ENG_w5 <- df_ENG[df_ENG$date >= "2020-05-04" & df_ENG$date <= "2020-05-10",]
 ENG_w6 <- df_ENG[df_ENG$date >= "2020-05-11" & df_ENG$date <= "2020-05-17",]
+ENG_w7 <- df_ENG[df_ENG$date >= "2020-05-18" & df_ENG$date <= "2020-05-24",]
+
 
 FR_w1 <- df_FR[df_FR$date >= "2020-04-06" & df_FR$date <= "2020-04-12",]
 FR_w2  <- df_FR[df_FR$date >= "2020-04-13" & df_FR$date <= "2020-04-19",]
@@ -453,9 +457,46 @@ FR_w3  <- df_FR[df_FR$date >= "2020-04-20" & df_FR$date <= "2020-04-26",]
 FR_w4  <- df_FR[df_FR$date >= "2020-04-27" & df_FR$date <= "2020-05-03",]
 FR_w5  <- df_FR[df_FR$date >= "2020-05-04" & df_FR$date <= "2020-05-10",]
 FR_w6 <- df_FR[df_FR$date >= "2020-05-11" & df_FR$date <= "2020-05-17",]
+FR_w7 <- df_FR[df_FR$date >= "2020-05-18" & df_FR$date <= "2020-05-24",]
+
+
+view(count(ENG_w1, country))
+view(count(ENG_w2, country))
+view(count(ENG_w3, country))
+view(count(ENG_w4, country))
+view(count(ENG_w5, country))
+view(count(ENG_w6, country))
+view(count(FR_w1, country))
+view(count(FR_w2, country))
+view(count(FR_w3, country))
+view(count(FR_w4, country))
+view(count(FR_w5, country))
+view(count(FR_w6, country))
+
+view(count(FR_w1,participant))
+view(count(FR_w2, participant))
+view(count(FR_w3, participant))
+view(count(FR_w4, participant))
+view(count(FR_w5, participant))
+view(count(FR_w6, participant))
+
+df_RESPONSES_Kenya <- filter(df_RESPONSES, country == "Kenya")
+df_RESPONSES_Nigeria <- filter(df_RESPONSES, country == "Nigeria")
+df_RESPONSES_SouthAfrica <- filter(df_RESPONSES, country == "South Africa")
+df_RESPONSES_Ethiopia <- filter(df_RESPONSES, country == "Ethiopia")
+df_RESPONSES_Malawi <- filter(df_RESPONSES, country == "Malawi")
 
 
 
 ```
+
+```{r}
+#Export Sheets of Responses to Select Some tweets 
+
+write_xlsx(df_RESPONSES_Nigeria,"df_RESPONSES_Nigeria.xlsx")
+write_xlsx(df_RESPONSES_Ethiopia,"df_RESPONSES_Ethiopia.xlsx")
+write_xlsx(df_RESPONSES_SouthAfrica,"df_RESPONSES_SouthAfrica.xlsx")
+write_xlsx(df_RESPONSES_Malawi,"df_RESPONSES_Malawi.xlsx")
+write_xlsx(df_RESPONSES_Kenya,"df_RESPONSES_Kenya.xlsx")
 
 

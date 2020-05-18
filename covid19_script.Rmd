@@ -148,7 +148,7 @@ tweets_text <- tweets_text %>%
   anti_join(covidwords)
 
 sewohcolors <- c("#232e50", "#007991")
-tweets_text %>% 
+p <- tweets_text %>% 
   count(word, sort = TRUE) %>%
   top_n(15) %>%
   mutate(word = reorder(word, n)) %>%
@@ -165,7 +165,7 @@ tweets_text %>%
 yistweets_text$hashtags <- as.character(yistweets_text$hashtags)
 yistweets_text$hashtags <- gsub("c\\(", "", yistweets_text$hashtags)
 set.seed(1234)
-wordcloud(tweets_text$word, min.freq=15, scale=c(3.5, .5), random.order=FALSE, rot.per=0.35, 
+wc <- wordcloud(tweets_text$word, min.freq=15, scale=c(3.5, .5), random.order=FALSE, rot.per=0.35, 
           colors=sewohcolors)
 
 

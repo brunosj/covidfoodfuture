@@ -274,7 +274,7 @@ df$target <-
 #target_binaries
 
             df$target_farmers_producers <-  ifelse(grepl("farmer|farmers|producer|producers", df$full_text, ignore.case = T), 1, 0)
-            df$target_consumers <-   ifelse(grepl("consumer|consumers", df$full_text, ignore.case = T), 1, 0)
+            df$target_consumers <-   ifelse(grepl("consumer|consumers | buyer | buyers", df$full_text, ignore.case = T), 1, 0)
             df$target_distributors <-  ifelse(grepl("distributor|distributors |distribution |transport | markets |suppliers |food-suppliers | food-supply", df$full_text, ignore.case = T), 1, 0)
             df$target_vendors <-  ifelse(grepl("vendor|vendors", df$full_text, ignore.case = T), 1, 0)
             df$target_youth <-  ifelse(grepl("youth|young", df$full_text, ignore.case = T), 1, 0)
@@ -358,25 +358,7 @@ df_ENG <- df %>%
 count(df_FR, participant) # tweets per countries
 count(df_ENG, participant)
 
-# filter df by week 
-#f_FR_w23 <- filter(df_FR, week == "2-3" )
 
-#df_ENG_w23 <- filter(df_ENG, week == "2-3" )
-
-######## EXPORT TO EXCEL ######## 
-
-#write_xlsx(df_FR_w23,"df_FR_w23.xlsx")
-#write_xlsx(df_ENG_w23,"df_ENG_w23.xlsx")
-
-
-#df_ENG_w23 <- filter(df_ENG, week == "2-3" )
-
-######## EXPORT TO EXCEL ######## 
-
-#write_xlsx(df_FR_w23,"df_FR_w23.xlsx")
-#write_xlsx(df_ENG_w23,"df_ENG_w23.xlsx")
-
-#df_ENG_w23 <- filter(df_ENG, week == "2-3" )
 ```
 
 
@@ -430,7 +412,7 @@ count(df_ENG, participant)
     
 df_RESPONSES <- filter(df_ENG, responses_all == 1)
     
-view(count(df_RESPONSES, country))
+
 ####### EXPORT TO EXCEL ######## 
 
 #write_xlsx(df_FR_w23,"df_FR_w23.xlsx")

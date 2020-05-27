@@ -78,7 +78,7 @@ mentions <- get_mentions()
 # tweets using #Covid19FoodFuture (can only retrive up to 6-9 days in the past, i.e we need to scrape data every week)
 covid19foodfuture <- search_tweets("#Covid19FoodFuture", n = 5000)
 covid19foodfuture_net <- network_data(covid19foodfuture, "retweet,mention,reply")
-#write_xlsx(covid19foodfuture,"cff_hastag_202005051852-202005141226.xlsx") this one is written already
+#write_xlsx(covid19foodfuture,"cff_hastag_202005190348-202005271321.xlsx")
 
 # 30-day search (maximum n per search is 100, which is problematic)
 # covidhastag <- search_30day(

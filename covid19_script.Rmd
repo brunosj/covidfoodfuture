@@ -494,10 +494,10 @@ df_RESPONSES_Malawi <- filter(df_RESPONSES, country == "Malawi")
 ```{r}
 #Export Sheets of Responses to Select Some tweets 
 
-#write_xlsx(df_RESPONSES_Nigeria,"df_RESPONSES_Nigeria.xlsx")
-#write_xlsx(df_RESPONSES_Ethiopia,"df_RESPONSES_Ethiopia.xlsx")
-#write_xlsx(df_RESPONSES_SouthAfrica,"df_RESPONSES_SouthAfrica.xlsx")
-#write_xlsx(df_RESPONSES_Malawi,"df_RESPONSES_Malawi.xlsx")
-#write_xlsx(df_RESPONSES_Kenya,"df_RESPONSES_Kenya.xlsx")
+write_xlsx(df_RESPONSES_Nigeria,"df_RESPONSES_Nigeria.xlsx")
+write_xlsx(df_RESPONSES_Ethiopia,"df_RESPONSES_Ethiopia.xlsx")
+write_xlsx(df_RESPONSES_SouthAfrica,"df_RESPONSES_SouthAfrica.xlsx")
+write_xlsx(df_RESPONSES_Malawi,"df_RESPONSES_Malawi.xlsx")
+write_xlsx(df_RESPONSES_Kenya,"df_RESPONSES_Kenya.xlsx")
 
 

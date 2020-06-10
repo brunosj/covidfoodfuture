@@ -1,0 +1,239 @@
+---
+title: "Web Scraping"
+output: html_notebook
+---
+
+```{r}
+
+p_needed <- c(
+  'rtweet',
+  'twitteR',
+  'tidyverse',
+  'rvest', 
+  'purrr'
+			)
+packages <- rownames(installed.packages())
+p_to_install <- p_needed[!(p_needed %in% packages)]
+if (length(p_to_install) > 0) {
+  install.packages(p_to_install)}
+lapply(p_needed, require, character.only = TRUE)
+
+```
+
+```{r}
+# for a single page
+
+url <-  "https://medium.com/enabling-sustainability/covid-19-au-b%C3%A9nin-le-secteur-de-la-distribution-touch%C3%A9-par-la-pand%C3%A9mie-3e4897396600" 
+blog1 <- read_html(url)
+
+title <- blog1 %>% 
+  html_node("strong") %>% 
+  html_text() 
+
+body <- blog1 %>% 
+  html_nodes("p") %>% 
+  html_text()
+
+article = c(title, body)
+article
+```
+
+```{r}
+# for multiple pages
+
+urlpage <- "https://medium.com/enabling-sustainability/tagged/covid-19"
+page <- read_html(url)
+
+page %>% html_nodes("div") %>% 
+  html_nodes("postArticle")
+
+links <- page %>% 
+  html_nodes("postArticle") %>% 
+  html_nodes("a") %>% 
+  html_attr('href')
+
+#links <- links[-c(15)] # remove the mailto link
+
+pages <- links %>% map(read_html)
+titles <- pages %>% 
+  map_chr(. %>% 
+  html_node("strong") %>% 
+  html_text() 
+  )
+
+```
+
+```{r}
+# for a user 
+url <- "https://medium.com/@edou.sango" # here you can paste the URL of a specific participants
+url <- read_html(url)
+
+
+urls <- url %>% 
+  html_nodes("a") %>% 
+  html_attr('href')
+
+urls <- as.data.frame(urls)
+urls <- urls[grep("/enabling-sustainability", urls$urls),]
+urls <- as.data.frame(urls)
+urls <- unique(urls)
+urls <- urls[c(2,4,6,8,10),] #need to find a better way to only select those
+urls <- as.character(urls) %>% 
+  paste0("http://medium.com", .)
+
+articles_sango <- urls %>%
+  map(~ {
+    read_html(.x) %>%
+      html_nodes('p') %>% 
+      html_text()
+  })
+
+View(articles)
+
+```
+
+```{r}
+# for a user 
+url <- "https://medium.com/@mrakotojaofeno" # here you can paste the URL of a specific participants
+url <- read_html(url)
+
+
+urls <- url %>% 
+  html_nodes("a") %>% 
+  html_attr('href')
+
+urls <- as.data.frame(urls)
+urls <- urls[grep("/enabling-sustainability", urls$urls),]
+urls <- as.data.frame(urls)
+urls <- unique(urls)
+urls <- urls[c(2,4,6,8,10),] #need to find a better way to only select those
+urls <- as.character(urls) %>% 
+  paste0("http://medium.com", .)
+
+articles_malala <- urls %>%
+  map(~ {
+    read_html(.x) %>%
+      html_nodes('p') %>% 
+      html_text()
+  })
+
+View(articles_malala)
+
+```
+
+```{r}
+# for a user 
+url <- "https://medium.com/@josherbert25" # here you can paste the URL of a specific participants
+url <- read_html(url)
+
+
+urls <- url %>% 
+  html_nodes("a") %>% 
+  html_attr('href')
+
+urls <- as.data.frame(urls)
+urls <- urls[grep("/enabling-sustainability", urls$urls),]
+urls <- as.data.frame(urls)
+urls <- unique(urls)
+urls <- urls[c(2,4,6,8,10),] #need to find a better way to only select those
+urls <- as.character(urls) %>% 
+  paste0("http://medium.com", .)
+
+articles_jose <- urls %>%
+  map(~ {
+    read_html(.x) %>%
+      html_nodes('p') %>% 
+      html_text()
+  })
+
+View(articles_jose)
+
+```
+
+
+```{r}
+# for a user 
+url <- "https://medium.com/@mayadisraeli" # here you can paste the URL of a specific participants
+url <- read_html(url)
+
+
+urls <- url %>% 
+  html_nodes("a") %>% 
+  html_attr('href')
+
+urls <- as.data.frame(urls)
+urls <- urls[grep("/enabling-sustainability", urls$urls),]
+urls <- as.data.frame(urls)
+urls <- unique(urls)
+urls <- urls[c(2,4,6,8),] #need to find a better way to only select those
+urls <- as.character(urls) %>% 
+  paste0("http://medium.com", .)
+
+articles_maya <- urls %>%
+  map(~ {
+    read_html(.x) %>%
+      html_nodes('p') %>% 
+      html_text()
+  })
+
+View(articles_maya)
+
+```
+
+```{r}
+# for a user 
+url <- "https://medium.com/@mvuenga" # here you can paste the URL of a specific participants
+url <- read_html(url)
+
+
+urls <- url %>% 
+  html_nodes("a") %>% 
+  html_attr('href')
+
+urls <- as.data.frame(urls)
+urls <- urls[grep("/enabling-sustainability", urls$urls),]
+urls <- as.data.frame(urls)
+urls <- unique(urls)
+urls <- urls[c(2,4,6,8,10),] #need to find a better way to only select those
+urls <- as.character(urls) %>% 
+  paste0("http://medium.com", .)
+
+articles_eden <- urls %>%
+  map(~ {
+    read_html(.x) %>%
+      html_nodes('p') %>% 
+      html_text()
+  })
+
+View(articles_eden)
+
+```
+
+```{r}
+# for a user 
+url <- "https://medium.com/@yacineyade" # here you can paste the URL of a specific participants
+url <- read_html(url)
+
+
+urls <- url %>% 
+  html_nodes("a") %>% 
+  html_attr('href')
+
+urls <- as.data.frame(urls)
+urls <- urls[grep("/enabling-sustainability", urls$urls),]
+urls <- as.data.frame(urls)
+urls <- unique(urls)
+urls <- urls[c(2,4),] #need to find a better way to only select those
+urls <- as.character(urls) %>% 
+  paste0("http://medium.com", .)
+
+articles_yacine <- urls %>%
+  map(~ {
+    read_html(.x) %>%
+      html_nodes('p') %>% 
+      html_text()
+  })
+
+View(articles_yacine)
+
+```

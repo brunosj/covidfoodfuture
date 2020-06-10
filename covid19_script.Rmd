@@ -40,10 +40,10 @@ lapply(p_needed, require, character.only = TRUE)
 # setup oauth token
 
 ## store api keys
-api_key <- "O1l6Ht3YmIWBP2be2o0OAhCKj"
-api_secret_key <- "yfbkjUjw4cix3PbF12gKYiZAGgRkSt5zIbufxq7Mj5jIrRHQXd"
-access_token <- "1245981415784747008-voxU5hUTIogF3xsZbIqpqLXFgF6QMQ"
-access_token_secret <- "JgQKXkd7aKcOLYdzFQZe4c3CLL1qCbAh8BiwIhGu7gVez"
+api_key <- "fFIKrdOiHSYFMxtfvZcUyftJ8"
+api_secret_key <- "nm8xcqVe2OdcI5ZmetnZyb5iIBoLxln9Z4b3HZ04K5JADvMOht"
+access_token <- "1245981415784747008-yV0Wxy57LtZTWOGtH4ZOCcj464hujv"
+access_token_secret <- "OxW2G3QmSk4zoCtzYcefHmUuSGpzw07ROBP85rCzX0M9Z"
 
 ## authenticate via web browser
 token <- create_token(
@@ -59,7 +59,7 @@ token <- create_token(
 ############ TWITTER SCRAPING ############
 
 # retrieve tweets from timeline
-yistweets <- get_timeline("CovidFoodFuture", n = 3200)
+yistweets <- get_timeline("CovidFoodFuture")
 yistweets_team <- yistweets[yistweets$is_retweet==FALSE, ] #remove retweets
 
 ```

@@ -1852,10 +1852,66 @@ View(articles)
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBmb3IgYSB1c2VyIFxudXJsIDwtIFwiaHR0cHM6Ly9tZWRpdW0uY29tL0BtcmFrb3RvamFvZmVub1wiICMgaGVyZSB5b3UgY2FuIHBhc3RlIHRoZSBVUkwgb2YgYSBzcGVjaWZpYyBwYXJ0aWNpcGFudHNcbnVybCA8LSByZWFkX2h0bWwodXJsKVxuXG5cbnVybHMgPC0gdXJsICU+JSBcbiAgaHRtbF9ub2RlcyhcImFcIikgJT4lIFxuICBodG1sX2F0dHIoJ2hyZWYnKVxuXG51cmxzIDwtIGFzLmRhdGEuZnJhbWUodXJscylcbnVybHMgPC0gdXJsc1tncmVwKFwiL2VuYWJsaW5nLXN1c3RhaW5hYmlsaXR5XCIsIHVybHMkdXJscyksXVxudXJscyA8LSBhcy5kYXRhLmZyYW1lKHVybHMpXG51cmxzIDwtIHVuaXF1ZSh1cmxzKVxudXJscyA8LSB1cmxzW2MoMiw0LDYsOCwxMCksXSAjbmVlZCB0byBmaW5kIGEgYmV0dGVyIHdheSB0byBvbmx5IHNlbGVjdCB0aG9zZVxudXJscyA8LSBhcy5jaGFyYWN0ZXIodXJscykgJT4lIFxuICBwYXN0ZTAoXCJodHRwOi8vbWVkaXVtLmNvbVwiLCAuKVxuXG5hcnRpY2xlc19tYWxhbGEgPC0gdXJscyAlPiVcbiAgbWFwKH4ge1xuICAgIHJlYWRfaHRtbCgueCkgJT4lXG4gICAgICBodG1sX25vZGVzKCdwJykgJT4lIFxuICAgICAgaHRtbF90ZXh0KClcbiAgfSlcblxuVmlldyhhcnRpY2xlc19tYWxhbGEpXG5cbmBgYCJ9 -->
+<pre class="r"><code># for a user 
+url &lt;- &quot;https://medium.com/@mrakotojaofeno&quot; # here you can paste the URL of a specific participants
+url &lt;- read_html(url)
+
+
+urls &lt;- url %&gt;% 
+  html_nodes(&quot;a&quot;) %&gt;% 
+  html_attr('href')
+
+urls &lt;- as.data.frame(urls)
+urls &lt;- urls[grep(&quot;/enabling-sustainability&quot;, urls$urls),]
+urls &lt;- as.data.frame(urls)
+urls &lt;- unique(urls)
+urls &lt;- urls[c(2,4,6,8,10),] #need to find a better way to only select those
+urls &lt;- as.character(urls) %&gt;% 
+  paste0(&quot;http://medium.com&quot;, .)
+
+articles_malala &lt;- urls %&gt;%
+  map(~ {
+    read_html(.x) %&gt;%
+      html_nodes('p') %&gt;% 
+      html_text()
+  })
+
+View(articles_malala)
+</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBmb3IgYSB1c2VyIFxudXJsIDwtIFwiaHR0cHM6Ly9tZWRpdW0uY29tL0Bqb3NoZXJiZXJ0MjVcIiAjIGhlcmUgeW91IGNhbiBwYXN0ZSB0aGUgVVJMIG9mIGEgc3BlY2lmaWMgcGFydGljaXBhbnRzXG51cmwgPC0gcmVhZF9odG1sKHVybClcblxuXG51cmxzIDwtIHVybCAlPiUgXG4gIGh0bWxfbm9kZXMoXCJhXCIpICU+JSBcbiAgaHRtbF9hdHRyKCdocmVmJylcblxudXJscyA8LSBhcy5kYXRhLmZyYW1lKHVybHMpXG51cmxzIDwtIHVybHNbZ3JlcChcIi9lbmFibGluZy1zdXN0YWluYWJpbGl0eVwiLCB1cmxzJHVybHMpLF1cbnVybHMgPC0gYXMuZGF0YS5mcmFtZSh1cmxzKVxudXJscyA8LSB1bmlxdWUodXJscylcbnVybHMgPC0gdXJsc1tjKDIsNCw2LDgsMTApLF0gI25lZWQgdG8gZmluZCBhIGJldHRlciB3YXkgdG8gb25seSBzZWxlY3QgdGhvc2VcbnVybHMgPC0gYXMuY2hhcmFjdGVyKHVybHMpICU+JSBcbiAgcGFzdGUwKFwiaHR0cDovL21lZGl1bS5jb21cIiwgLilcblxuYXJ0aWNsZXNfam9zZSA8LSB1cmxzICU+JVxuICBtYXAofiB7XG4gICAgcmVhZF9odG1sKC54KSAlPiVcbiAgICAgIGh0bWxfbm9kZXMoJ3AnKSAlPiUgXG4gICAgICBodG1sX3RleHQoKVxuICB9KVxuXG5WaWV3KGFydGljbGVzX2pvc2UpXG5cbmBgYCJ9 -->
+<pre class="r"><code># for a user 
+url &lt;- &quot;https://medium.com/@josherbert25&quot; # here you can paste the URL of a specific participants
+url &lt;- read_html(url)
+
+
+urls &lt;- url %&gt;% 
+  html_nodes(&quot;a&quot;) %&gt;% 
+  html_attr('href')
+
+urls &lt;- as.data.frame(urls)
+urls &lt;- urls[grep(&quot;/enabling-sustainability&quot;, urls$urls),]
+urls &lt;- as.data.frame(urls)
+urls &lt;- unique(urls)
+urls &lt;- urls[c(2,4,6,8,10),] #need to find a better way to only select those
+urls &lt;- as.character(urls) %&gt;% 
+  paste0(&quot;http://medium.com&quot;, .)
+
+articles_jose &lt;- urls %&gt;%
+  map(~ {
+    read_html(.x) %&gt;%
+      html_nodes('p') %&gt;% 
+      html_text()
+  })
+
+View(articles_jose)
+</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1924,6 +1980,34 @@ View(articles_eden)
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBmb3IgYSB1c2VyIFxudXJsIDwtIFwiaHR0cHM6Ly9tZWRpdW0uY29tL0B5YWNpbmV5YWRlXCIgIyBoZXJlIHlvdSBjYW4gcGFzdGUgdGhlIFVSTCBvZiBhIHNwZWNpZmljIHBhcnRpY2lwYW50c1xudXJsIDwtIHJlYWRfaHRtbCh1cmwpXG5cblxudXJscyA8LSB1cmwgJT4lIFxuICBodG1sX25vZGVzKFwiYVwiKSAlPiUgXG4gIGh0bWxfYXR0cignaHJlZicpXG5cbnVybHMgPC0gYXMuZGF0YS5mcmFtZSh1cmxzKVxudXJscyA8LSB1cmxzW2dyZXAoXCIvZW5hYmxpbmctc3VzdGFpbmFiaWxpdHlcIiwgdXJscyR1cmxzKSxdXG51cmxzIDwtIGFzLmRhdGEuZnJhbWUodXJscylcbnVybHMgPC0gdW5pcXVlKHVybHMpXG51cmxzIDwtIHVybHNbYygyLDQpLF0gI25lZWQgdG8gZmluZCBhIGJldHRlciB3YXkgdG8gb25seSBzZWxlY3QgdGhvc2VcbnVybHMgPC0gYXMuY2hhcmFjdGVyKHVybHMpICU+JSBcbiAgcGFzdGUwKFwiaHR0cDovL21lZGl1bS5jb21cIiwgLilcblxuYXJ0aWNsZXNfeWFjaW5lIDwtIHVybHMgJT4lXG4gIG1hcCh+IHtcbiAgICByZWFkX2h0bWwoLngpICU+JVxuICAgICAgaHRtbF9ub2RlcygncCcpICU+JSBcbiAgICAgIGh0bWxfdGV4dCgpXG4gIH0pXG5cblZpZXcoYXJ0aWNsZXNfeWFjaW5lKVxuXG5gYGAifQ== -->
+<pre class="r"><code># for a user 
+url &lt;- &quot;https://medium.com/@yacineyade&quot; # here you can paste the URL of a specific participants
+url &lt;- read_html(url)
+
+
+urls &lt;- url %&gt;% 
+  html_nodes(&quot;a&quot;) %&gt;% 
+  html_attr('href')
+
+urls &lt;- as.data.frame(urls)
+urls &lt;- urls[grep(&quot;/enabling-sustainability&quot;, urls$urls),]
+urls &lt;- as.data.frame(urls)
+urls &lt;- unique(urls)
+urls &lt;- urls[c(2,4),] #need to find a better way to only select those
+urls &lt;- as.character(urls) %&gt;% 
+  paste0(&quot;http://medium.com&quot;, .)
+
+articles_yacine &lt;- urls %&gt;%
+  map(~ {
+    read_html(.x) %&gt;%
+      html_nodes('p') %&gt;% 
+      html_text()
+  })
+
+View(articles_yacine)
+</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 
 <div id="rmd-source-code">LS0tCnRpdGxlOiAiV2ViIFNjcmFwaW5nIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgpgYGB7cn0KCnBfbmVlZGVkIDwtIGMoCiAgJ3J0d2VldCcsCiAgJ3R3aXR0ZVInLAogICd0aWR5dmVyc2UnLAogICdydmVzdCcsIAogICdwdXJycicKCQkJKQpwYWNrYWdlcyA8LSByb3duYW1lcyhpbnN0YWxsZWQucGFja2FnZXMoKSkKcF90b19pbnN0YWxsIDwtIHBfbmVlZGVkWyEocF9uZWVkZWQgJWluJSBwYWNrYWdlcyldCmlmIChsZW5ndGgocF90b19pbnN0YWxsKSA+IDApIHsKICBpbnN0YWxsLnBhY2thZ2VzKHBfdG9faW5zdGFsbCl9CmxhcHBseShwX25lZWRlZCwgcmVxdWlyZSwgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKQoKYGBgCgpgYGB7cn0KIyBmb3IgYSBzaW5nbGUgcGFnZQoKdXJsIDwtICAiaHR0cHM6Ly9tZWRpdW0uY29tL2VuYWJsaW5nLXN1c3RhaW5hYmlsaXR5L2NvdmlkLTE5LWF1LWIlQzMlQTluaW4tbGUtc2VjdGV1ci1kZS1sYS1kaXN0cmlidXRpb24tdG91Y2glQzMlQTktcGFyLWxhLXBhbmQlQzMlQTltaWUtM2U0ODk3Mzk2NjAwIiAKYmxvZzEgPC0gcmVhZF9odG1sKHVybCkKCnRpdGxlIDwtIGJsb2cxICU+JSAKICBodG1sX25vZGUoInN0cm9uZyIpICU+JSAKICBodG1sX3RleHQoKSAKCmJvZHkgPC0gYmxvZzEgJT4lIAogIGh0bWxfbm9kZXMoInAiKSAlPiUgCiAgaHRtbF90ZXh0KCkKCmFydGljbGUgPSBjKHRpdGxlLCBib2R5KQphcnRpY2xlCmBgYAoKYGBge3J9CiMgZm9yIG11bHRpcGxlIHBhZ2VzCgp1cmxwYWdlIDwtICJodHRwczovL21lZGl1bS5jb20vZW5hYmxpbmctc3VzdGFpbmFiaWxpdHkvdGFnZ2VkL2NvdmlkLTE5IgpwYWdlIDwtIHJlYWRfaHRtbCh1cmwpCgpwYWdlICU+JSBodG1sX25vZGVzKCJkaXYiKSAlPiUgCiAgaHRtbF9ub2RlcygicG9zdEFydGljbGUiKQoKbGlua3MgPC0gcGFnZSAlPiUgCiAgaHRtbF9ub2RlcygicG9zdEFydGljbGUiKSAlPiUgCiAgaHRtbF9ub2RlcygiYSIpICU+JSAKICBodG1sX2F0dHIoJ2hyZWYnKQoKI2xpbmtzIDwtIGxpbmtzWy1jKDE1KV0gIyByZW1vdmUgdGhlIG1haWx0byBsaW5rCgpwYWdlcyA8LSBsaW5rcyAlPiUgbWFwKHJlYWRfaHRtbCkKdGl0bGVzIDwtIHBhZ2VzICU+JSAKICBtYXBfY2hyKC4gJT4lIAogIGh0bWxfbm9kZSgic3Ryb25nIikgJT4lIAogIGh0bWxfdGV4dCgpIAogICkKCmBgYAoKYGBge3J9CiMgZm9yIGEgdXNlciAKdXJsIDwtICJodHRwczovL21lZGl1bS5jb20vQGVkb3Uuc2FuZ28iICMgaGVyZSB5b3UgY2FuIHBhc3RlIHRoZSBVUkwgb2YgYSBzcGVjaWZpYyBwYXJ0aWNpcGFudHMKdXJsIDwtIHJlYWRfaHRtbCh1cmwpCgoKdXJscyA8LSB1cmwgJT4lIAogIGh0bWxfbm9kZXMoImEiKSAlPiUgCiAgaHRtbF9hdHRyKCdocmVmJykKCnVybHMgPC0gYXMuZGF0YS5mcmFtZSh1cmxzKQp1cmxzIDwtIHVybHNbZ3JlcCgiL2VuYWJsaW5nLXN1c3RhaW5hYmlsaXR5IiwgdXJscyR1cmxzKSxdCnVybHMgPC0gYXMuZGF0YS5mcmFtZSh1cmxzKQp1cmxzIDwtIHVuaXF1ZSh1cmxzKQp1cmxzIDwtIHVybHNbYygyLDQsNiw4LDEwKSxdICNuZWVkIHRvIGZpbmQgYSBiZXR0ZXIgd2F5IHRvIG9ubHkgc2VsZWN0IHRob3NlCnVybHMgPC0gYXMuY2hhcmFjdGVyKHVybHMpICU+JSAKICBwYXN0ZTAoImh0dHA6Ly9tZWRpdW0uY29tIiwgLikKCmFydGljbGVzX3NhbmdvIDwtIHVybHMgJT4lCiAgbWFwKH4gewogICAgcmVhZF9odG1sKC54KSAlPiUKICAgICAgaHRtbF9ub2RlcygncCcpICU+JSAKICAgICAgaHRtbF90ZXh0KCkKICB9KQoKVmlldyhhcnRpY2xlcykKCmBgYAoKYGBge3J9CiMgZm9yIGEgdXNlciAKdXJsIDwtICJodHRwczovL21lZGl1bS5jb20vQG1yYWtvdG9qYW9mZW5vIiAjIGhlcmUgeW91IGNhbiBwYXN0ZSB0aGUgVVJMIG9mIGEgc3BlY2lmaWMgcGFydGljaXBhbnRzCnVybCA8LSByZWFkX2h0bWwodXJsKQoKCnVybHMgPC0gdXJsICU+JSAKICBodG1sX25vZGVzKCJhIikgJT4lIAogIGh0bWxfYXR0cignaHJlZicpCgp1cmxzIDwtIGFzLmRhdGEuZnJhbWUodXJscykKdXJscyA8LSB1cmxzW2dyZXAoIi9lbmFibGluZy1zdXN0YWluYWJpbGl0eSIsIHVybHMkdXJscyksXQp1cmxzIDwtIGFzLmRhdGEuZnJhbWUodXJscykKdXJscyA8LSB1bmlxdWUodXJscykKdXJscyA8LSB1cmxzW2MoMiw0LDYsOCwxMCksXSAjbmVlZCB0byBmaW5kIGEgYmV0dGVyIHdheSB0byBvbmx5IHNlbGVjdCB0aG9zZQp1cmxzIDwtIGFzLmNoYXJhY3Rlcih1cmxzKSAlPiUgCiAgcGFzdGUwKCJodHRwOi8vbWVkaXVtLmNvbSIsIC4pCgphcnRpY2xlc19tYWxhbGEgPC0gdXJscyAlPiUKICBtYXAofiB7CiAgICByZWFkX2h0bWwoLngpICU+JQogICAgICBodG1sX25vZGVzKCdwJykgJT4lIAogICAgICBodG1sX3RleHQoKQogIH0pCgpWaWV3KGFydGljbGVzX21hbGFsYSkKCmBgYAoKYGBge3J9CiMgZm9yIGEgdXNlciAKdXJsIDwtICJodHRwczovL21lZGl1bS5jb20vQGpvc2hlcmJlcnQyNSIgIyBoZXJlIHlvdSBjYW4gcGFzdGUgdGhlIFVSTCBvZiBhIHNwZWNpZmljIHBhcnRpY2lwYW50cwp1cmwgPC0gcmVhZF9odG1sKHVybCkKCgp1cmxzIDwtIHVybCAlPiUgCiAgaHRtbF9ub2RlcygiYSIpICU+JSAKICBodG1sX2F0dHIoJ2hyZWYnKQoKdXJscyA8LSBhcy5kYXRhLmZyYW1lKHVybHMpCnVybHMgPC0gdXJsc1tncmVwKCIvZW5hYmxpbmctc3VzdGFpbmFiaWxpdHkiLCB1cmxzJHVybHMpLF0KdXJscyA8LSBhcy5kYXRhLmZyYW1lKHVybHMpCnVybHMgPC0gdW5pcXVlKHVybHMpCnVybHMgPC0gdXJsc1tjKDIsNCw2LDgsMTApLF0gI25lZWQgdG8gZmluZCBhIGJldHRlciB3YXkgdG8gb25seSBzZWxlY3QgdGhvc2UKdXJscyA8LSBhcy5jaGFyYWN0ZXIodXJscykgJT4lIAogIHBhc3RlMCgiaHR0cDovL21lZGl1bS5jb20iLCAuKQoKYXJ0aWNsZXNfam9zZSA8LSB1cmxzICU+JQogIG1hcCh+IHsKICAgIHJlYWRfaHRtbCgueCkgJT4lCiAgICAgIGh0bWxfbm9kZXMoJ3AnKSAlPiUgCiAgICAgIGh0bWxfdGV4dCgpCiAgfSkKClZpZXcoYXJ0aWNsZXNfam9zZSkKCmBgYAoKCmBgYHtyfQojIGZvciBhIHVzZXIgCnVybCA8LSAiaHR0cHM6Ly9tZWRpdW0uY29tL0BtYXlhZGlzcmFlbGkiICMgaGVyZSB5b3UgY2FuIHBhc3RlIHRoZSBVUkwgb2YgYSBzcGVjaWZpYyBwYXJ0aWNpcGFudHMKdXJsIDwtIHJlYWRfaHRtbCh1cmwpCgoKdXJscyA8LSB1cmwgJT4lIAogIGh0bWxfbm9kZXMoImEiKSAlPiUgCiAgaHRtbF9hdHRyKCdocmVmJykKCnVybHMgPC0gYXMuZGF0YS5mcmFtZSh1cmxzKQp1cmxzIDwtIHVybHNbZ3JlcCgiL2VuYWJsaW5nLXN1c3RhaW5hYmlsaXR5IiwgdXJscyR1cmxzKSxdCnVybHMgPC0gYXMuZGF0YS5mcmFtZSh1cmxzKQp1cmxzIDwtIHVuaXF1ZSh1cmxzKQp1cmxzIDwtIHVybHNbYygyLDQsNiw4KSxdICNuZWVkIHRvIGZpbmQgYSBiZXR0ZXIgd2F5IHRvIG9ubHkgc2VsZWN0IHRob3NlCnVybHMgPC0gYXMuY2hhcmFjdGVyKHVybHMpICU+JSAKICBwYXN0ZTAoImh0dHA6Ly9tZWRpdW0uY29tIiwgLikKCmFydGljbGVzX21heWEgPC0gdXJscyAlPiUKICBtYXAofiB7CiAgICByZWFkX2h0bWwoLngpICU+JQogICAgICBodG1sX25vZGVzKCdwJykgJT4lIAogICAgICBodG1sX3RleHQoKQogIH0pCgpWaWV3KGFydGljbGVzX21heWEpCgpgYGAKCmBgYHtyfQojIGZvciBhIHVzZXIgCnVybCA8LSAiaHR0cHM6Ly9tZWRpdW0uY29tL0BtdnVlbmdhIiAjIGhlcmUgeW91IGNhbiBwYXN0ZSB0aGUgVVJMIG9mIGEgc3BlY2lmaWMgcGFydGljaXBhbnRzCnVybCA8LSByZWFkX2h0bWwodXJsKQoKCnVybHMgPC0gdXJsICU+JSAKICBodG1sX25vZGVzKCJhIikgJT4lIAogIGh0bWxfYXR0cignaHJlZicpCgp1cmxzIDwtIGFzLmRhdGEuZnJhbWUodXJscykKdXJscyA8LSB1cmxzW2dyZXAoIi9lbmFibGluZy1zdXN0YWluYWJpbGl0eSIsIHVybHMkdXJscyksXQp1cmxzIDwtIGFzLmRhdGEuZnJhbWUodXJscykKdXJscyA8LSB1bmlxdWUodXJscykKdXJscyA8LSB1cmxzW2MoMiw0LDYsOCwxMCksXSAjbmVlZCB0byBmaW5kIGEgYmV0dGVyIHdheSB0byBvbmx5IHNlbGVjdCB0aG9zZQp1cmxzIDwtIGFzLmNoYXJhY3Rlcih1cmxzKSAlPiUgCiAgcGFzdGUwKCJodHRwOi8vbWVkaXVtLmNvbSIsIC4pCgphcnRpY2xlc19lZGVuIDwtIHVybHMgJT4lCiAgbWFwKH4gewogICAgcmVhZF9odG1sKC54KSAlPiUKICAgICAgaHRtbF9ub2RlcygncCcpICU+JSAKICAgICAgaHRtbF90ZXh0KCkKICB9KQoKVmlldyhhcnRpY2xlc19lZGVuKQoKYGBgCgpgYGB7cn0KIyBmb3IgYSB1c2VyIAp1cmwgPC0gImh0dHBzOi8vbWVkaXVtLmNvbS9AeWFjaW5leWFkZSIgIyBoZXJlIHlvdSBjYW4gcGFzdGUgdGhlIFVSTCBvZiBhIHNwZWNpZmljIHBhcnRpY2lwYW50cwp1cmwgPC0gcmVhZF9odG1sKHVybCkKCgp1cmxzIDwtIHVybCAlPiUgCiAgaHRtbF9ub2RlcygiYSIpICU+JSAKICBodG1sX2F0dHIoJ2hyZWYnKQoKdXJscyA8LSBhcy5kYXRhLmZyYW1lKHVybHMpCnVybHMgPC0gdXJsc1tncmVwKCIvZW5hYmxpbmctc3VzdGFpbmFiaWxpdHkiLCB1cmxzJHVybHMpLF0KdXJscyA8LSBhcy5kYXRhLmZyYW1lKHVybHMpCnVybHMgPC0gdW5pcXVlKHVybHMpCnVybHMgPC0gdXJsc1tjKDIsNCksXSAjbmVlZCB0byBmaW5kIGEgYmV0dGVyIHdheSB0byBvbmx5IHNlbGVjdCB0aG9zZQp1cmxzIDwtIGFzLmNoYXJhY3Rlcih1cmxzKSAlPiUgCiAgcGFzdGUwKCJodHRwOi8vbWVkaXVtLmNvbSIsIC4pCgphcnRpY2xlc195YWNpbmUgPC0gdXJscyAlPiUKICBtYXAofiB7CiAgICByZWFkX2h0bWwoLngpICU+JQogICAgICBodG1sX25vZGVzKCdwJykgJT4lIAogICAgICBodG1sX3RleHQoKQogIH0pCgpWaWV3KGFydGljbGVzX3lhY2luZSkKCmBgYA==</div>

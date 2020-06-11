@@ -59,7 +59,7 @@ token <- create_token(
 ############ TWITTER SCRAPING ############
 
 # retrieve tweets from timeline
-yistweets <- get_timeline("CovidFoodFuture")
+yistweets <- get_timeline("CovidFoodFuture", n=5000)
 yistweets_team <- yistweets[yistweets$is_retweet==FALSE, ] #remove retweets
 
 ```
@@ -441,6 +441,9 @@ FR_w4  <- df_FR[df_FR$date >= "2020-04-27" & df_FR$date <= "2020-05-03",]
 FR_w5  <- df_FR[df_FR$date >= "2020-05-04" & df_FR$date <= "2020-05-10",]
 FR_w6 <- df_FR[df_FR$date >= "2020-05-11" & df_FR$date <= "2020-05-17",]
 FR_w7 <- df_FR[df_FR$date >= "2020-05-18" & df_FR$date <= "2020-05-24",]
+FR_w1to6 <- df_FR[df_FR$date >= "2020-04-06" & df_FR$date <= "2020-05-17",]
+
+df_w1to6 <- df[df$date >= "2020-04-06" & df$date <= "2020-05-17",]
 
 
 view(count(ENG_w1, country))

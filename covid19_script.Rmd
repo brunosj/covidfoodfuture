@@ -73,6 +73,7 @@ sum(yistweets_team$retweet_count)
 
 # followers and mentions
 followers <- get_followers("CovidFoodFuture")
+
 mentions <- get_mentions()
 
 # tweets using #Covid19FoodFuture (can only retrive up to 6-9 days in the past, i.e we need to scrape data every week)
@@ -127,6 +128,9 @@ sum(twitterweb$`engagement rate`)
 
 # word frequency plot
 yistweets_text <- yistweets_team # new object since we will remove text
+yistweets_text <- df_w1to6 # new object since we will remove text
+colnames(yistweets_text)[2] <- "text"
+
 yistweets_text$text <-  gsub("https\\S*", "", yistweets_text$text)
 yistweets_text$text <-  gsub("@\\S*", "", yistweets_text$text) 
 yistweets_text$text  <-  gsub("amp", "", yistweets_text$text) 
@@ -166,7 +170,7 @@ yistweets_text$hashtags <- as.character(yistweets_text$hashtags)
 yistweets_text$hashtags <- gsub("c\\(", "", yistweets_text$hashtags)
 set.seed(1234)
 wc <- wordcloud(tweets_text$word, min.freq=15, scale=c(3.5, .5), random.order=FALSE, rot.per=0.35, 
-          colors=sewohcolors)
+         colors=sewohcolors)
 
 
 # time series of usage of #Covid19FoodFuture (only for the last 6-9 days sadly)
@@ -442,9 +446,13 @@ FR_w5  <- df_FR[df_FR$date >= "2020-05-04" & df_FR$date <= "2020-05-10",]
 FR_w6 <- df_FR[df_FR$date >= "2020-05-11" & df_FR$date <= "2020-05-17",]
 FR_w7 <- df_FR[df_FR$date >= "2020-05-18" & df_FR$date <= "2020-05-24",]
 FR_w1to6 <- df_FR[df_FR$date >= "2020-04-06" & df_FR$date <= "2020-05-17",]
+FR_w7to12 <- df_FR[df_FR$date >= "2020-05-17" & df_FR$date <= "2020-06-30",]
+
 
 df_w1to6 <- df[df$date >= "2020-04-06" & df$date <= "2020-05-17",]
+df_w7to12 <- df[df$date >= "2020-05-17" & df$date <= "2020-06-30",]
 
+view(count(df, participant))
 
 view(count(ENG_w1, country))
 view(count(ENG_w2, country))
@@ -472,6 +480,10 @@ df_RESPONSES_SouthAfrica <- filter(df_RESPONSES, country == "South Africa")
 df_RESPONSES_Ethiopia <- filter(df_RESPONSES, country == "Ethiopia")
 df_RESPONSES_Malawi <- filter(df_RESPONSES, country == "Malawi")
 
+write.csv(df_w1to6, file = "df_w1to6.csv")
+write.csv(df_w7to12, file = "df_w7to12.csv")
+write.csv(FR_w7to12, file = "FR_w7to12.csv")
+write_xlsx(FR_w7to12, "FR_w7to12.xlsx")
 
 
 ```
